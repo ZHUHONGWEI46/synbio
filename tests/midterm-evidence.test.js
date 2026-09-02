@@ -20,5 +20,5 @@ test('keeps historical wet-lab milestones explicitly separate from Round 0', () 
 
 test('uses six supplied report figures instead of placeholders', () => {
   assert.equal(evidenceFigures.length, 6);
-  assert.ok(evidenceFigures.every(({ src, title, caption }) => src.startsWith('/NJTech-SynCAR-2026-main/') && title && caption));
+  assert.ok(evidenceFigures.every(({ src, title, caption }) => src.startsWith('NJTech-SynCAR-2026-main/') && title && caption));
 });

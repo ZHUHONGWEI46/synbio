@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="node_modules/molstar/build/viewer/molstar.css" />
+    <link rel="stylesheet" href="vendor/molstar/viewer/molstar.css" />
     <style>html,body,#app{width:100%;height:100%;margin:0;overflow:hidden}</style>
   </head>
   <body>
     <div id="app"></div>
-    <script src="node_modules/molstar/build/viewer/molstar.js"></script>
+    <script src="vendor/molstar/viewer/molstar.js"></script>
     <script>
       molstar.Viewer.create('app', {
         layoutIsExpanded: false,
@@ -20,7 +20,7 @@
         viewportShowAnimation: false,
         viewportBackgroundColor: '#f8faff',
       }).then((viewer) => viewer.loadStructureFromUrl(
-        '/fold_2026_07_18_14_35/fold_2026_07_18_14_35_model_0.cif',
+        'fold_2026_07_18_14_35/fold_2026_07_18_14_35_model_0.cif',
         'mmcif',
       ));
     </script>

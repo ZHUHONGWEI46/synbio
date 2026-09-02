@@ -1,4 +1,4 @@
-const evidenceBase = '/NJTech-SynCAR-2026-main/submission/njtech-syncar/docs/中期进展汇报/中期进展图片';
+const evidenceBase = 'NJTech-SynCAR-2026-main/submission/njtech-syncar/docs/中期进展汇报/中期进展图片';
 
 export const pocketSites = Object.freeze([
   { label: 'D281', position: 281, wildTypeResidue: 'D', source: '分子对接口袋分析', note: 'GABA 5 Å 口袋候选位点' },

@@ -58,11 +58,11 @@ export function viewFromHash(hash = '') {
 
 export function modelPathForSelection(selection) {
   const normalized = String(selection ?? '').trim();
-  if (normalized === 'complex') return '/assets/structures/MAB2962-complex-docking.pdb';
+  if (normalized === 'complex') return 'assets/structures/MAB2962-complex-docking.pdb';
   const match = normalized.match(/(?:模型\s*)?([0-4])$/);
   if (!match) return undefined;
   const modelIndex = match[1];
-  return `/fold_2026_07_18_14_35/fold_2026_07_18_14_35_model_${modelIndex}.cif`;
+  return `fold_2026_07_18_14_35/fold_2026_07_18_14_35_model_${modelIndex}.cif`;
 }
 
 function currentStructureLabel() {
@@ -498,7 +498,7 @@ async function loadPae() {
   if (paeLoaded) return;
   setText('pae-status', '正在读取 1184 × 1184 PAE 矩阵…');
   try {
-    const response = await fetch('/fold_2026_07_18_14_35/fold_2026_07_18_14_35_full_data_0.json');
+    const response = await fetch('fold_2026_07_18_14_35/fold_2026_07_18_14_35_full_data_0.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     const pae = data.pae;
@@ -737,9 +737,9 @@ function bindControls() {
 }
 
 async function loadProjectSequence() {
-  const m3Path = encodeURI('/NJTech-SynCAR-2026-main/submission/njtech-syncar/data/raw/MAB2962 D281P-G420W-N514S.fa');
+  const m3Path = encodeURI('NJTech-SynCAR-2026-main/submission/njtech-syncar/data/raw/MAB2962 D281P-G420W-N514S.fa');
   const [response, m3Response] = await Promise.all([
-    fetch('/MAB2962.fa'),
+    fetch('MAB2962.fa'),
     fetch(m3Path).catch(() => undefined),
   ]);
   if (!response.ok) throw new Error(`FASTA读取失败：HTTP ${response.status}`);

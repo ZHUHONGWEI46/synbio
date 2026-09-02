@@ -1,0 +1,12 @@
+{
+  "name": "syncar-designer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "molstar": "^5.10.1"
+  }
+}

@@ -10,9 +10,9 @@ import {
 } from './experiments.js';
 import { evidenceFigures, pocketSites, wetLabMilestones } from './midterm-evidence.js';
 import { initNavigationMotion } from './motion.js';
-import { initHomeMotion } from './home-motion.js?v=20260909-runtime-fix';
-import { initResearchPages } from './research-pages.js?v=20260909-runtime-fix';
-import { initNarrative } from './narrative.js?v=20260909-runtime-fix';
+import { initHomeMotion } from './home-motion.js?v=20260909-gsap-complete';
+import { initResearchPages } from './research-pages.js?v=20260909-gsap-complete';
+import { initNarrative } from './narrative.js?v=20260909-gsap-complete';
 import { initTeamMotion } from './team-motion.js';
 import { createDemoPrediction } from './demo-prediction.js';
 import {

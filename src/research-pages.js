@@ -1,4 +1,4 @@
-import { feedbackDiagram } from './narrative.js?v=20260909-runtime-fix';
+import { feedbackDiagram } from './narrative.js?v=20260909-gsap-complete';
 const base = 'assets/repository/submission/njtech-syncar/wiki/';
 export const researchModules = [
   ['validation', '干湿闭环', 'Integrated-Validation.md', '从候选设计到实验反馈，追踪每一轮验证。'],

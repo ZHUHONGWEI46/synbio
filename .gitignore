@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+npm-debug.log*
+*.zip
+*.docx
+NJTech-SynCAR-2026-main/
+NJTech-SynCAR-2026-main 2/
+artifacts/
+audits/
+.superpowers/
+.codex/
+*.tmp

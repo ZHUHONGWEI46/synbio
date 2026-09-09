@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NJTech-SynCAR 以实验数据与人工智能改造 MAB2962 羧酸还原酶，探索从 L-谷氨酸到 1,4-丁二胺的绿色生物制造路线。" />
+    <title>NJTech-SynCAR | AI–SynBio Challenge 2026</title>
+    <link rel="stylesheet" href="node_modules/molstar/build/viewer/molstar.css" />
+    <link rel="stylesheet" href="styles.css?v=20260908-full-story" />
+    <link rel="stylesheet" href="research.css?v=20260908-modules" />
+    <link rel="stylesheet" href="narrative.css?v=20260909-typography-final" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#overview" data-view-target="overview" aria-label="返回项目首页">
+        <img class="brand-mark" src="assets/brand/mutdesign-logo.png" alt="" aria-hidden="true" />
+        <span class="brand-copy"><strong><span class="brand-team">NJTech-SynCAR</span><span class="brand-event">AI–SynBio</span><em>2026</em></strong></span>
+      </a>
+      <nav class="primary-nav" aria-label="项目主目录">
+        <span class="primary-nav-indicator" aria-hidden="true"></span>
+        <button type="button" data-project-topic="overview"><span>主页</span></button>
+        <button type="button" data-project-topic="validation"><img src="assets/navigation/01_closed_loop.png" alt="" /><span>干湿闭环</span></button>
+        <button type="button" data-project-topic="engineering"><img src="assets/navigation/02_engineering_cycle.png" alt="" /><span>工程循环</span></button>
+        <button type="button" data-project-topic="wet-lab"><img src="assets/navigation/03_wet_lab.png" alt="" /><span>湿实验</span></button>
+        <button type="button" data-project-topic="ai-methods"><span>AI 计算方法</span></button>
+        <button type="button" data-project-topic="verifiability"><img src="assets/navigation/04_verifiability.png" alt="" /><span>可验证性</span></button>
+        <button type="button" data-project-topic="team"><span class="nav-icon-crop"><img src="assets/navigation/06_attributions.png" alt="" /></span><span>团队成员</span></button>
+        <button id="workbench-trigger" class="workbench-trigger" type="button" aria-controls="workbench-subnav" aria-expanded="false"><img src="assets/navigation/07_design_workbench.png" alt="" /><span>设计工作台</span><i aria-hidden="true"></i></button>
+      </nav>
+      <div class="header-meta" aria-label="项目状态"><span class="meta-pill">目标蛋白：MAB2962</span><span class="meta-pill">真实数据 · v0.2</span></div>
+    </header>
+
+    <nav id="workbench-subnav" class="workbench-subnav" aria-label="设计工作台二级导航">
+      <button id="subnav-handle" class="subnav-handle" type="button" aria-label="展开设计工作台导航" aria-controls="workbench-menu" aria-expanded="false"><img src="assets/navigation/07_design_workbench.png" alt="" /></button>
+      <div id="workbench-menu" class="subnav-menu" aria-hidden="true">
+        <span class="subnav-active-indicator" aria-hidden="true"></span>
+        <button class="is-active" type="button" data-view-target="overview"><img src="assets/icons/01_project_overview.png" alt="" /><span>项目概览</span></button>
+        <button type="button" data-view-target="design"><img src="assets/icons/02_protein_structure.png" alt="" /><span>结构与突变</span></button>
+        <button type="button" data-view-target="experiments"><img src="assets/icons/09_experimental_data.png" alt="" /><span>实验数据</span></button>
+        <button type="button" data-view-target="batch"><img src="assets/icons/08_saturation_mutation.png" alt="" /><span>批量设计</span></button>
+      </div>
+    </nav>
+
+    <main class="app-main">
+      <section class="page-view overview-page" data-app-view="overview" aria-labelledby="overview-title">
+        <div id="home-scroll" class="page-scroll home-scroll">
+          <section id="home-hero" class="story-hero story-section" data-home-chapter="01">
+            <div class="story-rail" aria-hidden="true"><span>01</span><i></i></div>
+            <div class="story-shell story-hero-grid">
+              <div class="story-hero-copy">
+                <span class="story-kicker">NJTECH-SYNCAR · AI–SYNBIO CHALLENGE 2026</span>
+                <h1 id="overview-title">让羧酸还原酶，<br><em>更好地处理 GABA。</em></h1>
+                <p>我们正在探索一条从 L-谷氨酸到 1,4-丁二胺的绿色生物制造路线，并用实验数据与人工智能共同改造其中的关键酶 CAR。</p>
+                <div class="story-actions">
+                  <button class="story-primary-action" type="button" data-home-scroll-target="home-background">了解项目</button>
+                  <button class="story-text-action" type="button" data-view-target="design">查看结构与突变 <span aria-hidden="true">↗</span></button>
+                </div>
+              </div>
+              <figure class="story-structure home-reveal">
+                <div class="story-structure-frame"><img src="assets/home/hero/latest-complex-structure.png" alt="MAB2962 与 ATP、NADPH、镁离子及 GABA 的最新复合物对接构象" /></div>
+                <figcaption><b>MAB2962 COMPLEX</b><span>ATP · NADPH · Mg²⁺ · GABA</span><small>对接展示 · 未能量最小化</small></figcaption>
+              </figure>
+            </div>
+            <div class="story-shell reaction-route home-reveal" aria-label="从L-谷氨酸到1,4-丁二胺的生物制造路线">
+              <div><small>起始原料</small><strong>L-谷氨酸</strong></div><span><b>谷氨酸脱羧酶</b><i aria-hidden="true">→</i></span><div><small>中间产物</small><strong>GABA</strong></div><span class="is-bottleneck"><b>CAR 及后续转化</b><i aria-hidden="true">→</i></span><div><small>目标产物</small><strong>1,4-丁二胺</strong></div>
+            </div>
+          </section>
+
+          <section id="home-background" class="story-editorial story-section" data-home-chapter="02">
+            <div class="story-rail" aria-hidden="true"><span>02</span><i></i></div>
+            <div class="story-shell editorial-grid">
+              <div class="story-heading home-reveal"><span class="story-kicker">WHY BIO MANUFACTURING</span><h2>用生物的方式，<br>制造有价值的分子。</h2><p>从一种原料到另一种产品，化学转化是材料、医药与工业生产的共同基础。我们关注的是：这一步能否在更温和的条件下完成？</p></div>
+              <div class="editorial-body home-reveal"><p>传统化工路线常常需要高温、高压或复杂催化体系。生物制造提供了另一种思路：利用微生物和酶完成反应，探索降低能耗与环境负担的可能性。</p><p>本项目选择的目标产物是 <strong>1,4-丁二胺</strong>。它是一种平台化合物，可以作为材料、医药和精细化工领域的原料。我们的目标，是为它探索一条从 L-谷氨酸出发的生物制造路线。</p><p>在这条路线中，谷氨酸脱羧酶首先将 L-谷氨酸转化为 <strong>γ-氨基丁酸，也就是 GABA</strong>。接下来，羧酸还原酶 CAR 参与关键转化，与后续反应共同通向目标产物。</p></div>
+              <figure class="manufacturing-scene"><img src="assets/home/biomanufacturing-panorama.png" alt="生物制造的概念场景" loading="lazy" width="2172" height="724" /><figcaption>生物制造愿景 · AI 概念插画，非实验结果</figcaption></figure>
+              <div class="editorial-note home-reveal"><span>研究切入点</span><p>让路线中的关键酶更适应目标底物，为后续生物制造提供可用的酶元件。</p></div>
+            </div>
+          </section>
+
+          <section id="home-problem" class="story-problem story-section" data-home-chapter="03">
+            <div class="story-rail" aria-hidden="true"><span>03</span><i></i></div>
+            <div class="story-shell story-problem-grid">
+              <div class="story-heading home-reveal"><span class="story-kicker">THE BOTTLENECK</span><h2>一条生产路线，<br>遇到一台需要改造的酶。</h2></div>
+              <div class="story-problem-copy home-reveal">
+                <p>CAR 就像生产线上的一台关键机器，负责把 GABA 继续推向目标产物。但天然酶对 GABA 的催化活性较低，整条路线的效率因此受限。</p>
+                <p>酶本质上是由氨基酸组成的蛋白质。本项目研究的 MAB2962 有 1,184 个氨基酸，改变其中少数位置，就可能改变酶的空间形状、底物结合方式和催化性能。</p>
+                <p>但突变并不总是有益。有些变化会让酶失去活性，不同位点之间也可能相互影响。面对大量位置、替换方式与组合，逐个尝试就像在巨大的迷宫中寻找出口。</p>
+              </div>
+              <div class="bottleneck-meter home-reveal" role="img" aria-label="CAR活性不足形成生物制造路线瓶颈">
+                <div class="meter-flow"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="meter-gate"><small>CAR</small><strong>活性不足</strong></div>
+                <div class="meter-question">如何让 CAR 更高效地<br>识别并转化 GABA？</div>
+              </div>
+              <p class="diagram-disclaimer">催化瓶颈示意 · 粒子运动不代表反应速率或实验测量</p>
+            </div>
+          </section>
+
+          <section id="home-design-story" class="story-editorial story-design-story story-section" data-home-chapter="04">
+            <div class="story-rail" aria-hidden="true"><span>04</span><i></i></div>
+            <div class="story-shell editorial-grid">
+              <div class="story-heading home-reveal"><span class="story-kicker">KNOWLEDGE TO EXPERIMENT</span><h2>第一批候选，<br>从理解这台酶开始。</h2><p>半理性设计的意思，是先利用已有的生物学知识缩小范围，再通过实验寻找有效的改变。</p></div>
+              <div class="editorial-body home-reveal"><p>我们结合 CAR 的序列、三维结构、底物结合区域和催化中心，选择可能影响 GABA 转化效率的位置。序列提供进化与保守性线索，结构则帮助我们理解这些位置在空间中处于哪里。</p><p>选出位置之后，还需要真正构建突变体并检测活性。高通量检测让多个候选能够在同一套实验流程中被比较，获得第一批可供后续设计使用的真实数据。</p><p>这些结果既包括表现较好的变体，也包括没有改善或活性下降的变体。它们共同帮助我们认识：哪些改变值得继续探索，哪些方向需要重新考虑。</p></div>
+              <ol class="design-evidence-line home-reveal" aria-label="半理性设计与实验步骤"><li><span>01 / 分析</span><strong>序列与三维结构</strong><p>理解保守区域、结合口袋与催化中心。</p></li><li><span>02 / 选择</span><strong>候选位点与替换</strong><p>围绕可能影响底物适应性的位置提出假设。</p></li><li><span>03 / 验证</span><strong>构建与活性检测</strong><p>将设计假设转化为可比较的实验结果。</p></li></ol>
+            </div>
+          </section>
+
+          <section id="home-loop" class="story-loop story-section" data-home-chapter="05">
+            <div class="story-rail" aria-hidden="true"><span>05</span><i></i></div>
+            <div class="story-shell">
+              <div class="story-loop-heading home-reveal"><div><span class="story-kicker">A LEARNING EXPERIMENT</span><h2>把盲目试错，变成会学习的实验循环。</h2></div><p>实验给出真实答案，人工智能帮助缩小下一轮候选范围。预测不是结论，每一次推荐最终都要回到实验验证。</p></div>
+              <div class="ai-explanation home-reveal"><p>有了第一批数据，我们计划把<strong>突变位置、氨基酸的变化方式和对应的实验活性</strong>交给模型，让它学习哪些区域更关键、哪些变化更可能改善底物结合，以及哪些组合值得进一步尝试。</p><p>蛋白语言模型提供序列中隐藏的规律，结构预测帮助观察酶的空间形状；分子对接与分子动力学模拟则用于探索 GABA 与活性中心的相互作用。整合这些信息，是为了对大量候选进行排序，推荐少量值得实验验证的变体。</p></div>
+              <ol class="learning-loop" aria-label="AI辅助酶改造闭环">
+                <li class="home-reveal"><span>01</span><strong>读懂酶</strong><p>结合序列、三维结构、底物结合区域与催化中心，寻找可能影响 GABA 转化的位置。</p></li>
+                <li class="home-reveal"><span>02</span><strong>做出突变</strong><p>构建少量更有依据的候选变体，通过高通量检测获得真实活性数据。</p></li>
+                <li class="home-reveal"><span>03</span><strong>让模型学习</strong><p>将突变方式和实验结果交给模型，学习哪些区域与变化更值得关注。</p></li>
+                <li class="home-reveal"><span>04</span><strong>回到实验</strong><p>模型推荐下一轮候选，再由实验决定是否有效，持续形成闭环。</p></li>
+              </ol>
+              <p class="loop-feedback home-reveal">每一轮实验的结果都会成为下一轮学习的输入。随着数据积累，我们希望逐步改善候选选择，让有限的实验资源投入到更有依据的方向。</p>
+              <div class="story-destination-links home-reveal"><button type="button" data-view-target="design">进入结构与突变页面</button><button type="button" data-view-target="experiments">查看实验数据中心</button><span>网页中的 AI 评分仅用于流程演示，不代表真实预测结果。</span></div>
+            </div>
+          </section>
+
+          <section id="home-mechanism" class="story-editorial story-mechanism story-section" data-home-chapter="06">
+            <div class="story-rail" aria-hidden="true"><span>06</span><i></i></div>
+            <div class="story-shell editorial-grid">
+              <div class="story-heading home-reveal"><span class="story-kicker">UNDERSTANDING THE MECHANISM</span><h2>找到有效的突变，<br>还要理解为什么有效。</h2><p>活性检测告诉我们结果，结构与模拟帮助我们追问背后的原因。</p></div>
+              <div class="editorial-body home-reveal"><p>羧酸还原酶由多个结构域组成。可以把它们理解为同一台机器中需要配合的不同部件：底物识别、催化转化与产物释放，都依赖蛋白整体的协同工作。</p><p>因此，我们关注的不只是 GABA 周围的某个位点，也包括 CAR 三个结构域之间的互作关系。一个突变是否改变了底物的结合方式？是否影响结构域之间的配合？这些都是后续结构分析与模拟希望回答的问题。</p><p>理解机制，可以为下一轮改造提供更明确的依据，也有助于判断在 MAB2962 上获得的经验，是否能为其他羧酸还原酶提供参考。</p></div>
+              <div class="mechanism-questions home-reveal"><span>我们希望追问</span><p>底物怎样结合？<i aria-hidden="true"> / </i>结构域怎样配合？<i aria-hidden="true"> / </i>突变改变了什么？</p></div>
+            </div>
+          </section>
+
+          <section id="home-outlook" class="story-outlook story-section" data-home-chapter="07">
+            <div class="story-rail" aria-hidden="true"><span>07</span><i></i></div>
+            <div class="story-shell story-outlook-grid">
+              <div class="story-heading home-reveal"><span class="story-kicker">FROM ONE ENZYME TO A METHOD</span><h2>从改造一个酶开始，<br>建立可复用的方法。</h2><p>我们希望以 MAB2962 为示范，建立面向羧酸还原酶底物适应性改造的 AI 辅助设计平台。当酶对目标底物的活性不足时，可以将序列、结构和实验数据结合起来，更有依据地寻找改造方案。</p><p>如果这一策略成功，它既能为 L-谷氨酸到 1,4-丁二胺的新型生物制造路线提供关键酶元件，也能为其他羧酸还原酶的改造提供参考。当前的实验和分析，正是迈向这一目标的起点。</p></div>
+              <dl class="story-facts home-reveal">
+                <div><dt>目标酶</dt><dd>MAB2962</dd></div><div><dt>序列长度</dt><dd>1,184 aa</dd></div><div><dt>当前数据</dt><dd>28 个 Round 0 候选</dd></div>
+              </dl>
+              <div class="story-outlook-action home-reveal"><p>让每一轮实验都成为下一轮设计的依据。</p><button class="story-primary-action" type="button" data-view-target="design">进入 MutDesign 工作台</button></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="team" class="page-view team-page" data-app-view="team" hidden aria-labelledby="team-title">
+        <div id="home-team" class="team-chapter">
+          <img class="team-prop team-prop-protein" src="assets/team/prop-protein-structure.png" alt="" decoding="async" aria-hidden="true" />
+          <img class="team-prop team-prop-dashboard" src="assets/team/prop-data-dashboard.png" alt="" decoding="async" aria-hidden="true" />
+          <img class="team-prop team-prop-lab" src="assets/team/prop-lab-equipment.png" alt="" decoding="async" aria-hidden="true" />
+          <div class="team-grid-glow" aria-hidden="true"></div>
+          <div class="home-shell team-layout">
+            <div class="team-copy">
+              <div class="team-eyebrow"><span class="team-index">NJTech-SynCAR</span><span class="home-kicker">TEAM CONSTELLATION</span></div>
+              <h1 id="team-title"><span>五位成员，</span><span>同向而行。</span></h1>
+              <p>围绕 MAB2962 的设计、实验与持续迭代，NJTech-SynCAR 五位成员共同推进同一个目标。</p>
+            </div>
+            <div class="team-constellation" aria-label="团队成员协作星图">
+              <svg class="team-orbit-line" viewBox="0 0 1000 620" aria-hidden="true"><path d="M74 492 C176 285 306 522 427 282 S666 126 762 323 S897 530 962 376" /><path d="M74 521 C258 599 394 518 512 510 S761 550 962 411" /><circle cx="74" cy="492" r="5" /><circle cx="281" cy="433" r="5" /><circle cx="512" cy="259" r="7" /><circle cx="747" cy="327" r="5" /><circle cx="962" cy="376" r="5" /></svg>
+              <article class="team-member team-member-01" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-01.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-01-laptop.png" alt="郑天恩" decoding="async" /><div class="team-member-label"><small>MEMBER 01</small><strong>郑天恩</strong></div></article>
+              <article class="team-member team-member-02" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-02.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-02-tablet.png" alt="蔡一南" decoding="async" /><div class="team-member-label"><small>MEMBER 02</small><strong>蔡一南</strong></div></article>
+              <article class="team-member team-member-03" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-03.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-03-leader.png" alt="郑研老师" decoding="async" /><div class="team-member-label"><small>MEMBER 03</small><strong>郑研老师</strong></div></article>
+              <article class="team-member team-member-04" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-04.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-04-notebook.png" alt="陈静雯" decoding="async" /><div class="team-member-label"><small>MEMBER 04</small><strong>陈静雯</strong></div></article>
+              <article class="team-member team-member-05" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-05.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-05-lab.png" alt="朱宏伟" decoding="async" /><div class="team-member-label"><small>MEMBER 05</small><strong>朱宏伟</strong></div></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="design" class="page-view design-page" data-app-view="design" hidden aria-label="结构与突变设计">
+        <div id="workbench" class="workbench" aria-label="MutDesign 蛋白质突变设计工作台">
+          <aside class="control-panel panel" aria-label="蛋白质与突变设置">
+            <section class="panel-section" aria-labelledby="protein-settings-title">
+              <h1 id="protein-settings-title">蛋白质与结构</h1>
+              <div class="field-stack"><label for="protein-select">目标蛋白质</label><select id="protein-select" disabled><option selected>MAB2962</option></select></div>
+              <div class="field-stack"><label for="parent-select">当前亲本</label><select id="parent-select"><option value="M3" selected>M3 · D281P/G420W/N514S</option><option value="WT">WT · MAB2962</option></select></div>
+              <p id="m3-source-status" class="source-status" aria-live="polite">正在读取并校验项目提供的 M3 FASTA…</p>
+              <div class="field-stack"><label for="structure-select">结构来源</label><select id="structure-select"><option selected value="complex">最新复合物对接构象 · ATP/NADPH/Mg²⁺/GABA</option><option value="0">AlphaFold3 · 模型 0</option><option value="1">AlphaFold3 · 模型 1</option><option value="2">AlphaFold3 · 模型 2</option><option value="3">AlphaFold3 · 模型 3</option><option value="4">AlphaFold3 · 模型 4</option></select></div>
+              <p id="structure-source-note" class="source-status">对接展示：文件名标为“三突”，但坐标中281、420、514仍为WT残基；该复合物基于AF3受体、未经能量最小化，不代表实验解析结构。</p>
+              <div class="field-grid"><div class="field-stack"><label for="chain-select">蛋白链</label><select id="chain-select" disabled><option selected>A</option></select></div><div class="field-stack"><label for="site-input">突变位点</label><input id="site-input" type="number" value="191" min="1" max="1184" inputmode="numeric" /></div></div>
+            </section>
+            <section class="panel-section mutation-section" aria-labelledby="mutation-title">
+              <h2 id="mutation-title">突变设计</h2>
+              <p class="parent-context">亲本构建：<strong id="parent-context-label">D281P/G420W/N514S</strong></p>
+              <output id="full-mutation-label" class="full-mutation-label">Q191R/D281P/G420W/N514S</output>
+              <div class="mutation-flow" aria-label="当前突变为谷氨酰胺替换为精氨酸"><div><span>原始残基</span><strong><b id="from-residue">Q</b> <span id="from-name">Glutamine</span></strong></div><span class="mutation-arrow" aria-hidden="true">→</span><div><span>目标残基</span><strong><b id="to-residue" class="accent-letter">R</b> <span id="to-name">Arginine</span></strong></div></div>
+              <div class="field-stack"><label for="residue-select">替换氨基酸</label><select id="residue-select"></select></div>
+              <div class="field-stack"><label for="combination-input">新增突变（支持多点）</label><input id="combination-input" value="Q191R" placeholder="例如 A38R/C412I" /></div>
+            </section>
+            <section class="panel-section known-sites-section" aria-labelledby="known-sites-title">
+              <div class="compact-heading"><h2 id="known-sites-title">报告候选口袋位点</h2><span>8 个</span></div>
+              <p>结构定位，不改变当前候选构建</p>
+              <div class="known-site-grid">
+                <button type="button" data-known-site="281">D281</button>
+                <button type="button" data-known-site="302">I302</button>
+                <button type="button" data-known-site="303">M303</button>
+                <button type="button" data-known-site="306">G306</button>
+                <button type="button" data-known-site="342">A342</button>
+                <button type="button" data-known-site="343">L343</button>
+                <button type="button" data-known-site="344">V344</button>
+                <button type="button" data-known-site="396">V396</button>
+              </div>
+            </section>
+            <button id="load-results" class="primary-button" type="button">生成并定位 Q191R</button>
+            <p id="control-status" class="control-status" aria-live="polite">已读取 MAB2962 项目数据，等待序列校验。</p>
+          </aside>
+
+          <section class="structure-panel panel" aria-labelledby="structure-title">
+            <div class="section-toolbar"><div><h2 id="structure-title">蛋白质三维结构</h2><p id="structure-subtitle">MAB2962 · 链 A · 最新复合物对接构象</p></div><span id="structure-model-badge" class="model-badge">对接构象 · PDB</span></div>
+            <div class="viewer-tabs" role="tablist" aria-label="结构与序列视图"><button class="is-active" type="button" role="tab" aria-selected="true" data-viewer-tab="structure"><img src="assets/icons/02_protein_structure.png" alt="" />三维结构</button><button type="button" role="tab" aria-selected="false" data-viewer-tab="sequence"><img src="assets/icons/03_fasta_sequence.png" alt="" />FASTA 序列</button><button type="button" role="tab" aria-selected="false" data-viewer-tab="pae"><img src="assets/icons/04_pae_heatmap.png" alt="" />PAE 热图</button></div>
+            <div class="ligand-focus-bar" aria-label="复合物组分快速聚焦"><span>快速聚焦</span><button type="button" data-focus-chain="E" data-focus-label="GABA">GABA</button><button type="button" data-focus-chain="B" data-focus-label="ATP">ATP</button><button type="button" data-focus-chain="C" data-focus-label="NADPH">NADPH</button><button type="button" data-focus-chain="D" data-focus-label="Mg²⁺">Mg²⁺</button><button id="reset-structure-view" type="button">全结构</button></div>
+            <figure id="structure-panel" class="structure-view viewer-panel" aria-labelledby="structure-title">
+              <div class="structure-callout"><span>当前候选</span><strong id="selected-mutation">Q191R</strong><small id="structure-distance">位点 191 · 点击可定位</small></div>
+              <div class="structure-canvas"><div id="molstar-app" class="molstar-host" role="img" aria-label="MAB2962 AlphaFold3 真实三维结构"></div></div>
+              <figcaption class="structure-legend"><span id="structure-model-file"><i class="dot backbone"></i>正在载入复合物 PDB</span><span>拖动旋转 · 滚轮缩放 · 右键平移</span></figcaption>
+            </figure>
+            <section id="sequence-panel" class="viewer-panel sequence-panel" hidden aria-label="MAB2962 FASTA 序列">
+              <div class="sequence-toolbar"><label class="compact-input">定位位点<input id="sequence-search" type="number" min="1" max="1184" value="191" /></label><button id="copy-sequence" type="button">复制序列</button><button id="download-fasta" type="button"><img src="assets/icons/16_export.png" alt="" />下载 FASTA</button></div>
+              <p id="sequence-note" class="inline-note">M3 序列由 WT 按 D281P/G420W/N514S 前端生成。</p>
+              <div id="sequence-grid" class="sequence-grid" aria-label="可交互氨基酸序列"></div>
+            </section>
+            <section id="pae-panel" class="viewer-panel pae-panel" hidden aria-label="AlphaFold3 PAE 热图"><div class="pae-stage"><canvas id="pae-canvas" width="260" height="260" aria-label="1184乘1184 PAE矩阵缩略图"></canvas><div><h3>Predicted Aligned Error</h3><p>来自 <code>full_data_0.json</code>。颜色越深表示相对位置误差越低。</p><p id="pae-status" aria-live="polite">切换到此视图后载入真实 PAE 数据。</p><div class="pae-scale"><span>0 Å</span><i></i><span>31.75 Å+</span></div></div></div></section>
+            <dl class="structure-stats"><div><dt id="structure-stat-1-label">序列长度</dt><dd id="structure-stat-1-value">1,184 aa</dd></div><div><dt id="structure-stat-2-label">辅因子</dt><dd id="structure-stat-2-value">ATP · NADPH</dd></div><div><dt id="structure-stat-3-label">底物</dt><dd id="structure-stat-3-value">GABA</dd></div><div><dt id="structure-stat-4-label">金属离子</dt><dd id="structure-stat-4-value">Mg²⁺</dd></div></dl>
+          </section>
+
+          <aside class="score-panel panel" aria-label="实验结果与预测接口">
+            <section class="experiment-card" aria-labelledby="experiment-result-title"><div><p id="experiment-result-title">Round 0 实验结果</p><div class="experiment-value"><strong id="experiment-relative">1.118×</strong><span id="experiment-status" class="status-chip positive">已实验验证</span></div></div><p id="experiment-summary">Q191R 相对 M3 亲本提高 11.8%。</p></section>
+            <section class="result-details" aria-label="实验详情"><div><span>吸光值均值</span><strong id="experiment-mean">0.1282</strong></div><div><span>重复标准差</span><strong id="experiment-sd">0.0069</strong></div><div><span>变异系数 CV</span><strong id="experiment-cv">5.35%</strong></div><div><span>三次重复</span><strong id="experiment-replicates">0.1348 · 0.1287 · 0.1211</strong></div><div><span>数据来源</span><strong id="experiment-source">zero-shot 初筛吸光值.xlsx · round_0.xlsx</strong></div></section>
+            <section class="candidate-section" aria-labelledby="candidates-title"><div class="card-heading"><div><h2 id="candidates-title">实验候选排名</h2><p>按相对 M3 活性排序</p></div><button class="text-button" type="button" data-view-target="experiments">查看全部</button></div><div class="table-wrap"><table><thead><tr><th>排名</th><th>突变</th><th>相对值</th><th>结论</th></tr></thead><tbody id="candidate-table-body"></tbody></table></div></section>
+            <section class="ai-placeholder" aria-labelledby="ai-title"><div class="ai-icon" aria-hidden="true">AI</div><div><h2 id="ai-title">AI 活性预测</h2><strong class="demo-mode-label">演示模式</strong><p>使用确定性模拟展示候选评分流程，不调用真实预测模型。</p></div><div id="ai-demo-results" class="ai-demo-results" aria-label="演示预测结果" hidden><div class="ai-demo-score"><span>综合演示分</span><strong id="ai-demo-overall">—</strong><small>/ 100</small></div><dl><div><dt>活性</dt><dd id="ai-demo-activity">—</dd></div><div><dt>稳定性</dt><dd id="ai-demo-stability">—</dd></div><div><dt>结构兼容</dt><dd id="ai-demo-structure">—</dd></div></dl><p><strong id="ai-demo-summary">—</strong><span id="ai-demo-candidate">—</span></p></div><button id="ai-submit" type="button">运行演示预测</button><p id="ai-status" aria-live="polite">点击按钮生成当前候选的演示评分</p><small class="ai-demo-disclaimer">演示数据，不代表真实模型预测。</small></section>
+          </aside>
+          <p id="selection-feedback" class="sr-only" aria-live="polite">当前显示 Q191R 的真实实验结果。</p>
+        </div>
+      </section>
+
+      <section class="page-view data-page" data-app-view="experiments" hidden aria-labelledby="experiments-title">
+        <div class="page-scroll"><div class="page-heading"><div><span class="eyebrow">ROUND 0</span><h1 id="experiments-title">实验数据中心</h1><p>28 个四突变候选、三次重复、均值、标准差与相对 M3 活性。CV 仅作描述性统计，Wiki 尚未定义验收阈值。</p></div><span class="data-badge">来源：项目 Excel</span></div>
+          <div class="data-layout"><section class="content-card chart-card"><div class="card-heading"><div><h2>相对 M3 活性排序</h2><p>1.0 为三突变亲本基线</p></div></div><canvas id="experiment-chart" width="900" height="340" aria-label="候选相对活性柱状图"></canvas></section>
+          <section class="content-card experiment-table-card"><div class="filter-bar"><label>搜索突变<input id="experiment-search" placeholder="例如 Q191R 或 C412" /></label><label>实验结论<select id="experiment-direction"><option value="all">全部</option><option value="above">高于 M3</option><option value="below">低于 M3</option></select></label><span id="experiment-count">共 28 条</span></div><div class="data-table-wrap"><table><thead><tr><th>排名</th><th>新增突变</th><th>完整构建</th><th>重复 1/2/3</th><th>均值</th><th>SD</th><th>CV</th><th>相对 M3</th><th>结论</th></tr></thead><tbody id="experiment-table-body"></tbody></table></div></section></div>
+          <section id="wet-lab-evidence" class="wet-lab-evidence experiment-evidence-section" aria-labelledby="wet-lab-title">
+            <div class="evidence-heading"><div><span class="eyebrow">MIDTERM EVIDENCE</span><h2 id="wet-lab-title">湿实验里程碑与原始图证</h2><p>整理中期汇报中可追溯的非模型结果，点击图片可查看原图。</p></div><span class="data-badge">来源：中期进展汇报</span></div>
+            <p class="batch-warning"><strong>批次边界：</strong>下列相对 WT 结果来自历史实验批次，不能与 Round 0 的“相对 M3”数值直接合并比较。</p>
+            <div id="wet-lab-milestones" class="milestone-grid" aria-label="历史湿实验里程碑"></div>
+            <div id="evidence-gallery" class="evidence-gallery" aria-label="中期汇报原始图证"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page-view batch-page" data-app-view="batch" hidden aria-labelledby="batch-title">
+        <div class="page-scroll"><div class="page-heading"><div><span class="eyebrow">BATCH DESIGN</span><h1 id="batch-title">位点饱和突变设计</h1><p>在 WT 或 M3 亲本上生成除原残基外的 19 个候选，并导出 CSV/FASTA。</p></div><span class="data-badge">纯前端生成</span></div>
+          <div class="batch-layout"><aside class="content-card batch-controls"><h2>生成参数</h2><label>当前亲本<select id="batch-parent"><option value="M3" selected>M3 · 三突变体</option><option value="WT">WT · MAB2962</option></select></label><label>饱和位点<input id="batch-site" type="number" min="1" max="1184" value="1066" /></label><button id="batch-generate" class="primary-button" type="button">生成 19 个候选</button><div class="export-row"><button id="batch-export-csv" type="button"><img src="assets/icons/16_export.png" alt="" />导出 CSV</button><button id="batch-export-fasta" type="button"><img src="assets/icons/16_export.png" alt="" />导出 FASTA</button></div><p id="batch-status" aria-live="polite">载入序列后即可生成。</p></aside>
+          <section class="content-card batch-results"><div class="card-heading"><div><h2 id="batch-results-title">C1066 饱和候选</h2><p>未进行 AI 评分，状态统一为待实验</p></div><span id="batch-count" class="data-badge">0 个</span></div><div class="data-table-wrap"><table><thead><tr><th>#</th><th>新增突变</th><th>完整构建</th><th>亲本</th><th>状态</th></tr></thead><tbody id="batch-table-body"></tbody></table></div></section></div>
+        </div>
+      </section>
+    </main>
+    <dialog id="evidence-dialog" class="evidence-dialog" aria-labelledby="evidence-dialog-title">
+      <button id="evidence-dialog-close" class="dialog-close" type="button" aria-label="关闭原图">关闭</button>
+      <figure><img id="evidence-dialog-image" alt="" /><figcaption><h2 id="evidence-dialog-title"></h2><p id="evidence-dialog-caption"></p></figcaption></figure>
+    </dialog>
+    <script src="node_modules/molstar/build/viewer/molstar.js"></script>
+    <script type="module" src="src/app.js?v=20260909-typography-final"></script>
+  </body>
+</html>

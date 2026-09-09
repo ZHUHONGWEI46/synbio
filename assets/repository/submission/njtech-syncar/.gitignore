@@ -1,0 +1,96 @@
+# ============================
+# Python
+# ============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ============================
+# Build / packaging
+# ============================
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# ============================
+# Notebooks
+# ============================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ============================
+# IDE / editor
+# ============================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ============================
+# ML artifacts (do NOT commit)
+# Put a small example weight in results/checkpoints/example/
+# Real checkpoints go to a release / external storage
+# ============================
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.weights
+results/checkpoints/*.pt
+results/checkpoints/*.ckpt
+wandb/
+mlruns/
+lightning_logs/
+
+# ============================
+# Data — by default we DO NOT commit raw / large data.
+# Use Git LFS, or document download links in data/README.md
+# ============================
+# data/raw/*
+# data/processed/*
+# !data/raw/.gitkeep
+# !data/processed/.gitkeep
+# !data/README.md
+# *.fastq
+# *.fastq.gz
+# *.bam
+# *.sam
+# *.cram
+# *.h5ad
+# *.loom
+
+# ============================
+# Logs / temp
+# ============================
+*.log
+logs/
+tmp/
+.cache/
+
+# ============================
+# Secrets — NEVER commit
+# ============================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.yaml
+config/local.yaml
+
+# ============================
+# OS / misc
+# ============================
+*.bak
+*.orig

@@ -1,0 +1,48 @@
+# ============================================================================
+# Baseline config for the MAB2962 mutation-effect prediction pipeline.
+#
+# Both `scripts/train_stage1.py` and `scripts/train_stage2.py` accept a
+# `--config` flag pointing at this file. CLI flags override these values
+# when the flag was *not* explicitly set on the command line.
+#
+# Usage:
+#   python -m scripts.train_stage1 --config ../configs/baseline.yaml --seed 42
+#   python -m scripts.train_stage2 --config ../configs/baseline.yaml \
+#       --stage1_dir ../results/checkpoints/stage1 --save_name stage2
+# ============================================================================
+
+# Common
+seed: 42
+cpu: false
+
+# ----------------------------------------------------------------------------
+# Stage 1: MLM adaptive pretraining on MAB2962 sequences (WT + single mutants)
+# ----------------------------------------------------------------------------
+stage1:
+  lora_r: 8
+  lr: 1.0e-4
+  epochs: 50
+  batch_size: 4
+  mask_ratio: 0.15
+  patience: 10
+  save_every: 2
+  save_name: stage1
+  # data_path: ../data/MAB2962_v1.pkl      # uncomment to override
+  # protein_key: MAB2962_Araya_2026         # uncomment to override
+
+# ----------------------------------------------------------------------------
+# Stage 2: Multi-site Concat-Delta regression head fine-tuning
+# ----------------------------------------------------------------------------
+stage2:
+  freeze_up_to: 8           # freeze the first 8 of 12 ESM-2 layers
+  dropout: 0.2
+  lr_esm: 5.0e-6
+  lr_head: 5.0e-4
+  epochs: 15
+  batch_size: 8
+  patience: 5
+  cross_validation: 4
+  save_name: stage2
+  max_sites: 3              # supports 1, 2, or 3 mutation sites per record
+  # stage1_dir: ../results/checkpoints/stage1
+  # data_path: ../data/MAB2962_multi_v1.pkl

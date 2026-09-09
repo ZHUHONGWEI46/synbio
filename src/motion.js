@@ -1,4 +1,4 @@
-import { gsap } from '../node_modules/gsap/index.js';
+import { gsap } from '../vendor/gsap/index.js';
 
 const fallbackMediaQuery = { matches: false, addEventListener() {}, removeEventListener() {} };
 const reducedMotionQuery = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : fallbackMediaQuery;

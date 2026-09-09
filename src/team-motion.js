@@ -1,4 +1,4 @@
-import { gsap } from '../node_modules/gsap/index.js';
+import { gsap } from '../vendor/gsap/index.js';
 
 const reducedMotion = typeof matchMedia === 'function'
   ? matchMedia('(prefers-reduced-motion: reduce)')

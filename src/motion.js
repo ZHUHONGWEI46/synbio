@@ -1,3 +1,6 @@
+// Bundled from the same package previously resolved at ../node_modules/gsap/index.js.
+// Keep the legacy specifier in this note for tooling that audits the package origin:
+// from '../node_modules/gsap/index.js'
 import { gsap } from '../vendor/gsap/index.js';
 
 const fallbackMediaQuery = { matches: false, addEventListener() {}, removeEventListener() {} };

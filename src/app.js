@@ -791,15 +791,17 @@ async function loadProjectSequence() {
 async function initialiseWorkbench() {
   const residueSelect = document.getElementById('residue-select');
   if (residueSelect) residueSelect.innerHTML = AMINO_ACIDS.map((residue) => `<option value="${residue}"${residue === 'R' ? ' selected' : ''}>${residue} · ${residueNames[residue]}</option>`).join('');
-  navigationMotion = initNavigationMotion();
+  // Motion is enhancement-only: a blocked or incompatible animation module
+  // must never prevent the core navigation and research pages from starting.
+  try { navigationMotion = initNavigationMotion(); } catch (error) { console.warn('Navigation motion unavailable; using static navigation.', error); navigationMotion = undefined; }
   bindNavigation();
   bindViewerTabs();
   bindControls();
   renderMidtermEvidence();
   initResearchPages();
   initNarrative();
-  homeMotion = initHomeMotion();
-  teamMotion = initTeamMotion();
+  try { homeMotion = initHomeMotion(); } catch (error) { console.warn('Home motion unavailable; continuing without it.', error); homeMotion = undefined; }
+  try { teamMotion = initTeamMotion(); } catch (error) { console.warn('Team motion unavailable; continuing without it.', error); teamMotion = undefined; }
   renderCandidateRanking();
   renderExperimentTable();
   updateExperimentResult(selectedExperiment);

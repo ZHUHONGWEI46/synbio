@@ -134,7 +134,7 @@ test('loads the local AlphaFold3 mmCIF model directly in the workbench', () => {
   const app = read('src/app.js');
 
   assert.match(html, /vendor\/molstar\/molstar\.css/);
-  assert.match(html, /vendor\/molstar\/molstar\.js/);
+  assert.match(app, /vendor\/molstar\/molstar\.js/);
   assert.doesNotMatch(html, /node_modules\//);
   assert.match(html, /id="molstar-app"/);
   assert.doesNotMatch(html, /<iframe/);

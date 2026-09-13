@@ -62,11 +62,11 @@ export function viewFromHash(hash = '') {
 
 export function modelPathForSelection(selection) {
   const normalized = String(selection ?? '').trim();
-  if (normalized === 'complex') return '/assets/structures/MAB2962-complex-docking.pdb';
+  if (normalized === 'complex') return 'assets/structures/MAB2962-complex-docking.pdb';
   const match = normalized.match(/(?:模型\s*)?([0-4])$/);
   if (!match) return undefined;
   const modelIndex = match[1];
-  return `/fold_2026_07_18_14_35/fold_2026_07_18_14_35_model_${modelIndex}.cif`;
+  return `fold_2026_07_18_14_35/fold_2026_07_18_14_35_model_${modelIndex}.cif`;
 }
 
 function currentStructureLabel() {
@@ -520,7 +520,7 @@ async function loadPae() {
   if (paeLoaded) return;
   setText('pae-status', '正在读取 1184 × 1184 PAE 矩阵…');
   try {
-    const response = await fetch('/fold_2026_07_18_14_35/fold_2026_07_18_14_35_full_data_0.json');
+    const response = await fetch('fold_2026_07_18_14_35/fold_2026_07_18_14_35_full_data_0.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     const pae = data.pae;
@@ -685,11 +685,27 @@ function syncStructureActivity() {
   }
 }
 
+let structureRuntimePromise;
+function ensureStructureRuntime() {
+  if (globalThis.molstar?.Viewer) return Promise.resolve();
+  if (structureRuntimePromise) return structureRuntimePromise;
+  structureRuntimePromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'vendor/molstar/molstar.js';
+    script.onload = () => globalThis.molstar?.Viewer ? resolve() : reject(new Error('三维引擎未正确初始化'));
+    script.onerror = () => { script.remove(); reject(new Error('三维引擎下载失败')); };
+    document.head.append(script);
+  }).catch(error => { structureRuntimePromise = undefined; throw error; });
+  return structureRuntimePromise;
+}
+
 async function initialiseStructureViewer() {
   const host = document.getElementById('molstar-app');
-  if (!host || !globalThis.molstar?.Viewer || structureViewer || structureViewerLoading || !host.getBoundingClientRect().width) return;
+  if (!host || structureViewer || structureViewerLoading || !host.getBoundingClientRect().width) return;
   structureViewerLoading = true;
   try {
+    setText('structure-model-file', '正在下载三维引擎与结构数据…');
+    await ensureStructureRuntime();
     structureViewer = await globalThis.molstar.Viewer.create('molstar-app', {
       layoutIsExpanded: false,
       layoutShowControls: false,
@@ -774,9 +790,9 @@ function bindControls() {
 }
 
 async function loadProjectSequence() {
-  const m3Path = encodeURI('/NJTech-SynCAR-2026-main/submission/njtech-syncar/data/raw/MAB2962 D281P-G420W-N514S.fa');
+  const m3Path = 'assets/repository/submission/njtech-syncar/data/raw/mab2962_psw.faa';
   const [response, m3Response] = await Promise.all([
-    fetch('/MAB2962.fa'),
+    fetch('MAB2962.fa'),
     fetch(m3Path).catch(() => undefined),
   ]);
   if (!response.ok) throw new Error(`FASTA读取失败：HTTP ${response.status}`);

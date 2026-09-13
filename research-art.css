@@ -1,0 +1,21 @@
+.research-header { position: relative; }
+.research-header::after { display: none; }
+.research-header > h1, .research-header > p { max-width: 43%; }
+.research-header-art { position: absolute; top: 22px; right: 0; width: 55%; height: 220px; display: flex; align-items: center; pointer-events: none; }
+.research-art-sprite { width: 100%; aspect-ratio: 5 / 1; background: url('assets/research/header-art-atlas.png') 50% var(--art-row) / 100% 500% no-repeat; mix-blend-mode: multiply; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent), linear-gradient(0deg, transparent, #000 12%, #000 88%, transparent); mask-composite: intersect; }
+.research-art-orbit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.research-art-orbit path { fill: none; stroke: #80aae0; stroke-width: .7; opacity: .25; }
+.research-art-orbit circle { fill: #568bd0; opacity: .65; }
+.research-header-art > small { position: absolute; right: 3%; bottom: 0; color: #879ab4; font-size: 10px; letter-spacing: .08em; }
+.research-route { position: relative; }
+@media (max-width: 1000px) {
+  .research-header-art { top: 30px; width: 49%; height: 190px; }
+  .research-header > h1, .research-header > p { max-width: 48%; }
+}
+@media (max-width: 760px) {
+  .research-header > h1, .research-header > p { max-width: 100%; }
+  .research-header-art { position: relative; top: auto; width: 100%; height: auto; min-height: 105px; margin: 18px 0 28px; }
+  .research-header-art > small { bottom: -14px; }
+  .research-art-orbit { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .research-art-orbit { display: none; } }

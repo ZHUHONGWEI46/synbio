@@ -17,6 +17,17 @@ export function initNarrative() {
   const root = document.querySelector('[data-app-view="overview"]');
   if (!root || root.dataset.narrativeReady) return;
   root.dataset.narrativeReady = 'true';
+  root.insertAdjacentHTML('afterbegin', '<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><filter id="car-white-key" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 2.94"/><feComponentTransfer><feFuncA type="linear" slope="4"/></feComponentTransfer><feComposite in2="SourceAlpha" operator="in"/></filter></defs></svg>');
+  const iconNames = ['engine', 'engine', 'tune', 'assay', 'learn', 'loop', 'variant'];
+  root.querySelectorAll('[data-home-chapter]').forEach((chapter, i) => {
+    const kicker = chapter.querySelector('.story-kicker');
+    if (kicker) kicker.insertAdjacentHTML('afterbegin', `<span class="car-chapter-icon car-icon-${iconNames[i]}" aria-hidden="true"></span>`);
+    if (i > 0) chapter.insertAdjacentHTML('afterbegin', '<div class="car-route-mark" aria-hidden="true"><span></span><i></i></div>');
+  });
+  root.querySelector('.story-hero-copy > p').insertAdjacentHTML('beforebegin', '<p class="car-tagline">为生物制造，调校一台分子引擎。</p>');
+  const structure = root.querySelector('.story-structure');
+  structure.classList.add('car-engine-stage');
+  structure.insertAdjacentHTML('afterbegin', '<div class="car-concept-visual"><img class="car-shell-art" src="assets/home/hero/car-molecular-silver.png" alt="银蓝玻璃跑车外壳，作为 CAR 分子引擎的概念容器"/><div class="car-enzyme-chamber"><img src="assets/home/hero/latest-complex-structure.png" alt="车身中央展示最新 MAB2962 复合物结构渲染"/></div><span>CAR / MOLECULAR ENGINE</span><small>概念车壳 × 实际结构渲染</small></div>');
   // Reuse the complete source paragraphs, pairing each with its design step.
   const design = root.querySelector('#home-design-story');
   const paragraphs = [...design.querySelectorAll('.editorial-body > p')];

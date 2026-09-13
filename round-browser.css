@@ -1,0 +1,24 @@
+.round-data-panel { min-width: 0; padding: 24px; }
+.round-sites { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; color: #7487a0; }
+.round-sites button { border: 1px solid #ccdbef; border-radius: 6px; padding: 5px 8px; background: #edf4ff; color: #426994; font-size: 11px; }
+.round-design-panel { padding: 16px; border-bottom: 1px solid #dce6f3; }
+.round-design-panel h2 { font-size: 14px; margin: 0 0 12px; }
+.round-design-panel label, .round-filter { display: grid; gap: 7px; font-size: 12px; color: #647995; }
+.round-design-panel select { width: 100%; min-width: 0; padding: 8px; border: 1px solid #d7e2f0; border-radius: 8px; background: #fff; }
+.round-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.round-tabs button { padding: 8px 14px; border: 1px solid #dbe5f3; border-radius: 9px; color: #6a809c; background: #f5f8fd; font-weight: 700; }
+.round-tabs button.is-active { background: #e7effc; border-color: #93b6e8; color: #3269a8; box-shadow: inset 0 1px 0 #fff; }
+.round-filter { max-width: 360px; margin: 12px 0; }
+.round-filter input { padding: 9px 12px; border: 1px solid #d5e1f0; border-radius: 8px; }
+.round-scope, .round-source { font-size: 12px; color: #7487a0; line-height: 1.75; }
+.round-overview { padding: 12px 0; color: #426994; font-size: 13px; border-bottom: 1px solid #e2eaf6; }
+.round-bars { display: grid; gap: 10px; padding: 24px 0; max-width: 850px; }
+.round-bars button { display: grid; grid-template-columns: 160px 1fr 70px; gap: 18px; align-items: center; padding: 0; border: 0; background: none; text-align: left; color: #496887; font-size: 12px; }
+.round-bars i { display: block; position: relative; height: 11px; background: #edf2fa; border-radius: 4px; }
+.round-bars b { display: block; width: var(--bar-width); height: 100%; border-radius: 4px; background: linear-gradient(90deg, #b4cceb, #6292ca); }
+.round-bars em { position: absolute; top: -4px; height: 19px; width: 1px; background: #345c8c; }
+.round-bars small { font-size: 10px; color: #8192a9; margin-top: 8px; }
+.round-data-panel td { white-space: nowrap; font-size: 12px; }
+.round-data-panel td:nth-child(3) { white-space: normal; min-width: 170px; }
+.round-data-panel td:nth-child(n+4):nth-child(-n+8) { text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .round-bars button { grid-template-columns: 110px 1fr 55px; gap: 9px; font-size: 10px; } }

@@ -1,113 +1,64 @@
 # AI / Computational Methods
 
-> 本页记录截至 2026-07-15 中期汇报节点已经形成的 AI / 计算方法。训练指标尚未锁定的部分不在本页给出数值。
+> 本页记录 MAB2962—GABA 体系中按实验时间推进的 R0—R2 设计—实验—学习闭环。模型输出只用于候选排序；评估值均为 Spearman 相关系数。
 
 ---
 
-## 1. 任务定义 / Task Formulation
+## 1. 任务与边界 / Task and scope
 
-**输入**：MAB2962 羧酸还原酶野生型 / 突变体氨基酸序列、突变位点信息、湿实验获得的相对活性数据。
+以三突变体 PSW（D281P/G420W/N514S）为起点，预测在其背景上新增一个突变后的相对活性，并用湿实验测量结果检验排序。正式历史 benchmark 只使用 `data/processed/round_0.xlsx`、`round_1.xlsx` 和 `round_2.xlsx`；Round 3 不参与训练、验证、模型选择或本页的模型结论。
 
-**输出**：候选突变体的活性预测或排序，用于指导后续四突变、五突变实验验证。
+## 2. PSW 到 R2 的闭环 / DBTL cycle
 
-**当前目标**：在三突变体 D281P/G420W/N514S 的基础上，探索进一步提升活性的候选组合。
+| 阶段 | 做了什么 | 实验反馈与据此调整 |
+| --- | --- | --- |
+| PSW → ESM2 zero-shot | 以 PSW 为背景，用 ESM2 zero-shot 对新增突变排序，构建候选。 | 将候选送入 R0 实验，而不把 PLM 分数当作活性。 |
+| R0 实验 | 测量 zero-shot 候选活性。 | R0 最佳值为 1.118、中位数 0.993，42.9% 候选超过 PSW；因此以 R0 实验标签训练监督模型。 |
+| R1 预测与实验 | 以 R0 为训练数据，比较 ESM2、EvolvePro-style RF 与 FCNN 的前向预测，并完成 R1 实验。 | R1 最佳值为 1.554、中位数 0.884，21.3% 候选超过 PSW。R0→R1 的最佳实验值由 1.118 提升至 1.554，约提高 39%。 |
+| R1 反馈 → R2 | 将 R1 标签加入训练集，固定 R2 为未来测试集，重新训练 RF 与 FCNN 后预测并实验验证。 | R2 最佳值为 1.386、中位数 0.906，25.5% 候选超过 PSW。FCNN 在同一 R2 测试集上的 Spearman 从 −0.040 提高至 0.118。 |
 
----
+这是一条“AI 预测 → 实验验证 → 数据反馈/重训练 → 下一轮预测与实验”的时间顺序闭环。R1 或 R2 的最佳实验值是对应轮次候选集中的观察值，不应解释为所有模型均准确或所有轮次均持续提升。
 
-## 2. 模型架构 / Model Architecture
+## 3. 正式 benchmark / Historical forward benchmark
 
-### 2.1 整体框架
-
-当前方案采用两阶段流程：
-
-1. **Stage 1：上游语言模型微调**。以 ESM-2 35M (`facebook/esm2_t12_35M_UR50D`) 为编码器骨架，注入 LoRA 适配矩阵，使用掩码语言建模任务让模型适应 MAB2962 序列空间。
-2. **Stage 2：活性回归模型**。加载 Stage 1 编码器，构建突变体与野生型的 delta embedding，并通过 MLP 回归头预测活性。
-
-### 2.2 关键组件
-
-| 组件 | 类型 | 是否原创 | 备注 |
-|---|---|---|---|
-| ESM-2 35M 编码器 | 预训练蛋白语言模型 | 否 | 作为序列表征骨架 |
-| LoRA 适配层 | 参数高效微调 | 否 / 本项目配置使用 | `r=8, alpha=16` |
-| Delta Embedding 表征 | 突变效应特征 | 本项目适配 | 对突变位点提取 MT-WT embedding 差值 |
-| MLP 回归头 | 活性回归 | 本项目训练 | 1440 -> 256 -> 64 -> 1 |
-
-### 2.3 当前配置
-
-配置文件见 `src/ai/configs/baseline.yaml`。中期报告中使用的关键设置包括：
-
-| 项目 | 当前值 |
-|---|---|
-| Stage 1 mask 概率 | 15% |
-| Stage 1 LoRA | `r=8, alpha=16` |
-| Stage 2 解冻层 | 前 8 层冻结，后 4 层微调 |
-| Stage 2 交叉验证 | 4-Fold StratifiedKFold |
-| Stage 2 回归损失 | MSE |
-
----
-
-## 3. 数据 / Data
-
-| 数据 | 路径 | 用途 | 来源 |
-|---|---|---|---|
-| zero-shot 初筛吸光值 | `data/raw/zero-shot 初筛吸光值.xlsx` | 候选验证与后续模型反馈 | 本项目湿实验 |
-| round_0 整理数据 | `data/processed/round_0.xlsx` | 候选序列与活性整理 | 本项目湿实验结果整理 |
-| MAB2962 序列 | `data/raw/MAB2962.fa` | 序列输入 | 本项目序列资料 |
-| MAB2962 D281P/G420W/N514S 序列 | `data/raw/MAB2962 D281P-G420W-N514S.fa` | 三突变体序列输入 | 本项目序列资料 |
-
-完整数据指纹见 [`data/README.md`](../data/README.md)。
-
----
-
-## 4. 训练与评估 / Training & Evaluation
-
-### 4.1 当前进度
-
-- 已整理 Stage 1 / Stage 2 训练脚本与配置。
-- 已建立面向 MAB2962 突变体的两阶段建模方案。
-- 中期节点的训练与验证指标尚未锁定，因此本页暂不填 Spearman、Top-K 命中率等结果。
-
-### 4.2 评估指标计划
-
-| 指标 | 用途 | 当前状态 |
-|---|---|---|
-| Spearman | 衡量预测排序与实测活性的相关性 | 待训练结果锁定 |
-| Top-K 命中率 | 衡量推荐候选进入湿实验后的命中情况 | 待后续实验验证 |
-| NDCG | 衡量高活性候选排序质量 | 待训练结果锁定 |
-
-### 4.3 基线对比
-
-中期报告中列出的待比较方法包括 ESM2-650M zero-shot、MSA-Transformer 和 ESM-IF1。当前训练结果尚未锁定，具体数值后续补充。
-
----
-
-## 5. 复现指南 / Reproducibility
-
-当前可查看的脚本入口：
+代码位于 [`src/ai/historical_benchmark/`](../src/ai/historical_benchmark/)，入口为：
 
 ```bash
-cd src/ai
-python -m scripts.prepare_multi_data --help
-python -m scripts.train_stage1 --help
-python -m scripts.train_stage2 --help
+python -m pip install -r src/ai/historical_benchmark/requirements.txt
+python src/ai/historical_benchmark/run_all.py
 ```
 
-完整训练需要对应的数据 pkl、PyTorch / ESM 环境和计算资源；长时间训练命令待数据与依赖锁定后补充。
+| 时间划分（训练 → 测试） | ESM2 zero-shot | EvolvePro-style RF | FCNN |
+| --- | ---: | ---: | ---: |
+| R0 → R1 | 0.467 | 0.158 | 0.137 |
+| R0 → R2 | 0.033 | 0.073 | −0.040 |
+| R0 + R1 → R2 | 0.033 | 0.071 | 0.118 |
+
+ESM2 为不拟合实验标签的 zero-shot 基线。RF 和 FCNN 均使用 ESM2-650M 冻结序列表征；RF 是受 EvolvePro 方法思路启发的工程化基线，并不声称复现或全面优于 EvolvePro 的已发表实现。超参数固定，监督模型的标准化器和拟合仅使用训练轮次；R2 不用于超参数选择。
+
+加入 R1 反馈后，只有 FCNN 在同一 R2 测试集上出现由 −0.040 到 0.118 的提升；ESM2 保持 0.033，RF 从 0.073 变为 0.071。因此结果支持“实验反馈可能改善该低样本设置中的部分模型”，不支持“所有模型均预测准确”或“新模型全面优于基线”的结论。
+
+## 4. 实现与可复现性 / Implementation
+
+正式代码只读取已有的处理后数据，不复制或改写原始数据。其关键约束如下：
+
+- ESM2 使用本地缓存的 `esm2_t33_650M_UR50D`，程序拒绝联网下载；1184 aa 序列以重叠窗口池化，避免静默截断。
+- 结果输出包括轮次活性摘要、九个 benchmark 单元的指标表、R1 反馈比较、逐候选预测、协议 JSON 与 Spearman 图。
+- 旧 Stage 1/2 模型、配置和训练脚本已从提交区移除；仅保留历史数据处理工具，不作为本页结果的证据。
+
+详见 [`src/ai/historical_benchmark/README.md`](../src/ai/historical_benchmark/README.md) 与 [可验证性页面](./Verifiability.md)。
+
+## 5. Round 3：高阶突变外推边界 / Retrospective challenge
+
+`data/processed/round_3.xlsx` 保留五突变组合的 20 条测量记录（18 种唯一组合），用于 **retrospective challenge / 方法边界分析**：它可帮助检验单新增突变、时间前向 benchmark 是否能外推至更高阶组合。Round 3 不进入上述模型代码，未用于训练、验证、模型选择，也不被用作声称额外 DBTL 成功或模型优于基线的证据。
+
+## 6. 局限 / Limitations
+
+- 数据量与突变覆盖仅限 MAB2962—GABA—PSW 背景，不能推及其他 CAR、底盘或底物。
+- 前向结果随测试轮次和模型而变化，不能由单一 Spearman 值概括。
+- 五突变及更高阶组合尚无纳入正式训练流程的可复现建模与系统验证。
+- 本仓库不分发 ESM2 权重或 embedding 缓存；复现者需具备 README 所列的本地模型缓存。
 
 ---
 
-## 6. 与湿实验的衔接 / Coupling with the Wet Lab
-
-zero-shot 候选已经进入湿实验验证，最高活性约为三突变体的 1.12 倍。该轮数据将作为后续 Stage 1 / Stage 2 模型迭代的反馈数据。闭环过程见 [Integrated Validation](./Integrated-Validation.md)。
-
----
-
-## 7. 局限与未来工作 / Limitations & Future Work
-
-- 当前受算力限制，先采用 ESM-2 35M 进行概念性验证。
-- 更大模型与更完整基线对比需要后续算力和训练结果支持。
-- 当前中期提交不包含模型权重；如后续公开，应在 `results/README.md` 和 `data/README.md` 中补充版本、路径和校验信息。
-
----
-
-*最后更新：2026-07-15*
+*最后更新：2026-09-10*

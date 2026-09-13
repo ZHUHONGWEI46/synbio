@@ -1,5 +1,6 @@
 import { candidates, parentMutations } from './data.js';
 import { experiments } from './experiment-data.js';
+import { initRoundBrowser, findRoundExperiment } from './round-browser.js?v=20260913-rounds';
 import {
   coefficientOfVariation,
   experimentStatus,
@@ -10,9 +11,9 @@ import {
 } from './experiments.js';
 import { evidenceFigures, pocketSites, wetLabMilestones } from './midterm-evidence.js';
 import { initNavigationMotion } from './motion.js';
-import { initHomeMotion } from './home-motion.js?v=20260909-gsap-complete';
-import { initResearchPages } from './research-pages.js?v=20260909-gsap-complete';
-import { initNarrative } from './narrative.js?v=20260909-gsap-complete';
+import { initHomeMotion } from './home-motion.js?v=20260913-silver-enzyme';
+import { initResearchPages } from './research-pages.js?v=20260913-header-art';
+import { initNarrative } from './narrative.js?v=20260913-alpha-fix';
 import { initTeamMotion } from './team-motion.js';
 import { createDemoPrediction } from './demo-prediction.js';
 import {
@@ -40,7 +41,7 @@ let wildTypeSequence = '';
 let m3Sequence = '';
 let parentSequence = '';
 let currentParent = 'M3';
-let selectedExperiment = findExperiment('Q191R');
+let selectedExperiment = findRoundExperiment('Q191R');
 let currentAddition = 'Q191R';
 let currentModelIndex = 0;
 let structureViewer;
@@ -173,6 +174,8 @@ function updateMutationPreview(addition) {
   setText('to-name', residueNames[mutation.to] ?? mutation.to);
   setText('full-mutation-label', currentParent === 'M3' ? mergeMutationLabels('M3', addition) : normalizeMutations(addition));
   setText('selected-mutation', normalizeMutations(addition));
+  setText('load-results', `生成并定位 ${normalizeMutations(addition)}`);
+  document.querySelector('.mutation-flow')?.setAttribute('aria-label', `首个新增突变 ${mutation.from}${mutation.position}${mutation.to}`);
   resetDemoPrediction();
 }
 
@@ -231,6 +234,11 @@ function focusStructureElement(chainId, label) {
 
 function updateExperimentResult(experiment) {
   selectedExperiment = experiment;
+  setText('experiment-result-title', !experiment ? '当前轮次实验结果' : experiment.normalized ? `${experiment.round} 正式实验结果 · 相对 PSW` : '历史 R0 原始读数');
+  const meanLabel = document.getElementById('experiment-mean')?.previousElementSibling;
+  if (meanLabel) meanLabel.textContent = experiment?.normalized ? '归一化活性均值' : '吸光值均值';
+  const replicateLabel = document.getElementById('experiment-replicates')?.previousElementSibling;
+  if (replicateLabel) replicateLabel.textContent = experiment?.normalized ? `有效重复 n=${experiment.replicates.length}` : '三次重复';
   if (!experiment) {
     setText('experiment-relative', '—');
     setText('experiment-status', '待实验');
@@ -239,16 +247,17 @@ function updateExperimentResult(experiment) {
     setText('experiment-sd', '—');
     setText('experiment-cv', '—');
     setText('experiment-replicates', '—');
+    setText('experiment-source', '当前轮次无匹配记录');
     return;
   }
   const gain = (experiment.relativeToParent - 1) * 100;
   setText('experiment-relative', `${experiment.relativeToParent.toFixed(3)}×`);
-  setText('experiment-status', '已实验验证');
-  setText('experiment-summary', `${experiment.mutation} 相对 M3 亲本${gain >= 0 ? '提高' : '降低'} ${Math.abs(gain).toFixed(1)}%。`);
+  setText('experiment-status', experiment.round === 'R3' ? '实测 · 回顾性挑战' : '已有实测记录');
+  setText('experiment-summary', `${experiment.fullMutation} 相对 ${experiment.normalized ? '同批次 PSW' : 'M3 亲本'}${gain >= 0 ? '提高' : '降低'} ${Math.abs(gain).toFixed(1)}%。${experiment.normalized ? '当前结构仅用于位点映射，非该变体专属结构。' : ''}`);
   setText('experiment-mean', experiment.mean.toFixed(4));
-  setText('experiment-sd', sampleStandardDeviation(experiment.replicates).toFixed(4));
-  setText('experiment-cv', `${coefficientOfVariation(experiment.replicates).toFixed(2)}%`);
-  setText('experiment-replicates', experiment.replicates.map((value) => value.toFixed(4)).join(' · '));
+  setText('experiment-sd', experiment.replicates.length > 1 ? sampleStandardDeviation(experiment.replicates).toFixed(4) : '—');
+  setText('experiment-cv', experiment.replicates.length > 1 && experiment.mean !== 0 ? `${coefficientOfVariation(experiment.replicates).toFixed(2)}%` : '—');
+  setText('experiment-replicates', (experiment.originalReplicates ?? experiment.replicates).map((value) => Number.isFinite(value) ? value.toFixed(4) : '—').join(' · '));
   setText('experiment-source', experiment.source);
 }
 
@@ -270,7 +279,7 @@ function selectExperiment(experiment, { focus = true } = {}) {
   document.querySelectorAll('[data-candidate]').forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.candidate === experiment.mutation));
   });
-  setStatus(`${experiment.mutation} 已通过序列校验，并读取真实 Round 0 实验结果。`, 'ready');
+  setStatus(`${experiment.fullMutation} 已读取 ${experiment.round} 实测结果；参考结构位点映射。`, 'ready');
   setText('selection-feedback', `当前显示 ${mutationLabel(experiment.mutation)} 的真实实验结果。`);
   if (focus) focusResidue(mutation.position);
 }
@@ -318,7 +327,7 @@ function updateFromControls() {
   if (combinationInput) combinationInput.value = addition;
   currentAddition = addition;
   updateMutationPreview(addition);
-  const experiment = currentParent === 'M3' ? findExperiment(addition) : undefined;
+  const experiment = currentParent === 'M3' ? findRoundExperiment(addition) : undefined;
   updateExperimentResult(experiment);
   setStatus(experiment ? `${addition} 有真实实验记录，点击生成并定位。` : `${addition} 序列合法；暂无实验记录。`, experiment ? 'ready' : 'idle');
 }
@@ -343,7 +352,7 @@ function generateDesign() {
     renderSequence(first.position);
     focusResidue(first.position);
   }
-  const experiment = currentParent === 'M3' && validation.mutations.length === 1 ? findExperiment(validation.normalized) : undefined;
+  const experiment = currentParent === 'M3' ? findRoundExperiment(validation.normalized) : undefined;
   updateExperimentResult(experiment);
   setStatus(experiment ? `${validation.normalized} 已读取真实实验结果。` : `${validation.normalized} 已生成突变序列；状态：待实验。`, 'ready');
 }
@@ -804,6 +813,16 @@ async function initialiseWorkbench() {
   try { teamMotion = initTeamMotion(); } catch (error) { console.warn('Team motion unavailable; continuing without it.', error); teamMotion = undefined; }
   renderCandidateRanking();
   renderExperimentTable();
+  initRoundBrowser({ onSelect: (experiment, navigate) => {
+    if (currentParent !== 'M3') applyParent('M3');
+    selectExperiment(experiment);
+    if (navigate) switchAppView('design');
+  }, onFocus: (position) => {
+    renderSequence(position);
+    focusResidue(position);
+    setText('structure-distance', `位点 ${position} · 当前组合不变`);
+    setText('structure-subtitle', `MAB2962 · 链 A · 位点 ${position} · ${currentStructureLabel()}`);
+  } });
   updateExperimentResult(selectedExperiment);
   try {
     await loadProjectSequence();

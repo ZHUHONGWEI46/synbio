@@ -1,12 +1,12 @@
 # Wet Lab / Experiments
 
-> 本页记录截至 2026-07-15 中期汇报节点已经形成的湿实验进展。未在当前材料中出现的批号、仪器型号和 ELN 链接暂不补写。
+> 本页记录已经形成的湿实验进展。
 
 ---
 
 ## 1. 实验总览 / Overview
 
-**实验目标**：建立 MAB2962 羧酸还原酶突变体的高通量筛选体系，并通过半理性设计、组合突变和 zero-shot 候选验证筛选更高活性的 CAR 突变体。
+**实验目标**：建立 MAB2962 羧酸还原酶突变体的高通量筛选体系，并通过半理性设计和AI指导的组合突变筛选更高活性的 CAR 突变体。
 
 **关键结论**：
 
@@ -25,28 +25,28 @@
 
 ### 2.1 菌株 / 细胞系
 
-| 名称 | 用途 | 备注 |
-|---|---|---|
-| E. coli DH5α | 质粒转化与扩增 | 用于突变质粒构建后扩增 |
+| 名称              | 用途                 | 备注                          |
+| ----------------- | -------------------- | ----------------------------- |
+| E. coli DH5α     | 质粒转化与扩增       | 用于突变质粒构建后扩增        |
 | E. coli BL21(DE3) | 蛋白表达与全细胞催化 | 用于 CAR 突变体表达和活力筛选 |
 
 ### 2.2 质粒 / 元件
 
-| 名称 | 用途 | 备注 |
-|---|---|---|
-| pET28a-MAB2962 | 野生型 CAR 表达模板 | 用于定点突变和饱和突变 |
-| pET28a-MAB2962D281P/G420W/N514S | 三突变体模板 | 用于后续突变设计 |
+| 名称                            | 用途                | 备注                   |
+| ------------------------------- | ------------------- | ---------------------- |
+| pET28a-MAB2962                  | 野生型 CAR 表达模板 | 用于定点突变和饱和突变 |
+| pET28a-MAB2962D281P/G420W/N514S | 三突变体模板        | 用于后续突变设计       |
 
 ### 2.3 主要试剂
 
-| 试剂 | 用途 | 批号 |
-|---|---|---|
-| IPTG | 诱导表达 | 待补充 |
-| GABA | CAR 反应底物 | 待补充 |
-| Mg2+ | 反应体系组分 | 待补充 |
-| D-葡萄糖 | 全细胞催化体系组分 | 待补充 |
-| 2-ABA | 显色/检测反应组分 | 待补充 |
-| DpnI | PCR 后模板质粒消化 | 待补充 |
+| 试剂     | 用途               | 批号   |
+| -------- | ------------------ | ------ |
+| IPTG     | 诱导表达           | Lot:E2608463 |
+| GABA     | CAR 反应底物       | Lot#I2311729 |
+| Mg2+     | 反应体系组分       | Lot:KN388561 |
+| D-葡萄糖 | 全细胞催化体系组分 | Lot#:C18502887 |
+| 2-ABA    | 显色/检测反应组分  | Lot#:C17730696 |
+| DpnI     | PCR 后模板质粒消化 | Lot#AP71268A |
 
 ---
 
@@ -69,18 +69,22 @@ CAR 催化 GABA 还原生成 4-氨基丁醛，随后该产物可自发环化形�
 
 ## 4. 原始数据索引 / Raw Data Index
 
-| 实验 | 数据位置 | 文件类型 | 责任人 |
-|---|---|---|---|
-| zero-shot 候选初筛吸光值 | `data/raw/zero-shot 初筛吸光值.xlsx` | Excel | 待补充 |
-| zero-shot 候选整理数据 | `data/processed/round_0.xlsx` | Excel | 待补充 |
-| MAB2962 野生型序列 | `data/raw/MAB2962.fa` | FASTA | 待补充 |
-| MAB2962 D281P/G420W/N514S 序列 | `data/raw/MAB2962 D281P-G420W-N514S.fa` | FASTA | 待补充 |
+| 实验                           | 数据位置                                                             | 文件类型 | 责任人 |
+| ------------------------------ | -------------------------------------------------------------------- | -------- | ------ |
+| round_0 候选初筛吸光值         |  `data/raw/round_0_screening.xlsx`                                 | Excel    | 蔡一南 |
+| zero-shot 候选整理数据         | `data/processed/round_0.xlsx`                                      | Excel    | 蔡一南 |
+| round_1 复筛与正式候选数据     | `data/raw/round_1_screening.xlsx`；`data/processed/round_1.xlsx` | Excel    | 蔡一南 |
+| round_2 复筛与正式候选数据     | `data/raw/round_2_screening.xlsx`；`data/processed/round_2.xlsx` | Excel    | 蔡一南 |
+| MAB2962 野生型序列             | `data/raw/mab2962_wild_type.faa`                                   | FASTA    | 蔡一南 |
+| MAB2962 D281P/G420W/N514S 序列 | `data/raw/mab2962_psw.faa`                                         | FASTA    | 蔡一南 |
+| PSW-F430M / PSW-L417A 纯酶活性 | `data/raw/pure_enzyme_activity_normalized.xlsx`                    | Excel    | 蔡一南 |
+| 突变体全细胞 1,4-丁二胺催化    | `data/raw/whole_cell_catalysis.xlsx`                               | Excel    | 蔡一南 |
 
 ---
 
 ## 5. 关键统计 / Statistics
 
-当前中期材料已报告相对活力提升比例；统计检验方法、重复数和 p 值待后续整理后补充。
+各组均以原始表中记录的平行值计算算术平均值；相对活性以对应批次 PSW 对照的平均值归一化。round_0 共 33 个候选、每个候选 3 次平行；round_1 共 34 个候选，其中 F430M 为 2 次平行，其余 33 个候选为 3 次平行；round_2 共 39 个候选、均为 3 次平行。纯酶归一化活性和全细胞催化数据中的各记录均为 3 次平行；带有离散度的结果报告为平均值 ± 样本标准差。现有文件未标注平行测定属于技术重复还是生物学重复，因此不作推断；未开展的显著性检验不报告 p 值。
 
 ---
 
@@ -142,7 +146,7 @@ CAR 催化 GABA 还原生成 4-氨基丁醛，随后该产物可自发环化形�
 
 ### 6.5 羧酸还原酶酶活测定
 
-反应体系：50 mM PBS（pH 7.0）、10 mM GABA、1 mM NADPH、10 mM ATP、10 mM MgSO<sub>4</sub> 及适量纯酶（终浓度约 0.1 g/L）。于 30℃ 反应 30 min，用酶标仪检测 A<sub>340nm</sub> 变化。酶活定义：每分钟消耗 1 μmol NADPH 所需的酶量为 1 U。
+反应体系：50 mM PBS（pH 7.0）、10 mM GABA、1 mM NADPH、10 mM ATP、10 mM MgSO<sub>4</sub> 及适量纯酶（终浓度 1 g/L）。于 30℃ 反应 30 min，用酶标仪检测 A<sub>340nm</sub> 变化。酶活定义：每分钟消耗 1 μmol NADPH 所需的酶量为 1 U。
 
 ### 6.6 重组菌株 BL21-PUT 的构建及全细胞催化
 
@@ -164,8 +168,8 @@ CAR 催化 GABA 还原生成 4-氨基丁醛，随后该产物可自发环化形�
 
 ## 8. 与 AI 模型的衔接 / Coupling with the AI Model
 
-zero-shot 候选验证数据已整理至 `data/raw/zero-shot 初筛吸光值.xlsx` 与 `data/processed/round_0.xlsx`，用于后续模型迭代。干湿闭环说明见 [Integrated Validation](./Integrated-Validation.md)。
+zero-shot 候选验证数据已整理至 `data/raw/round_0_screening.xlsx` 与 `data/processed/round_0.xlsx`，用于后续模型迭代。第一、二轮复筛的正式候选表分别为 `data/processed/round_1.xlsx` 和 `data/processed/round_2.xlsx`。干湿闭环说明见 [Integrated Validation](./Integrated-Validation.md)。
 
 ---
 
-*最后更新：2026-07-15*
+*最后更新：2026年9月9日*

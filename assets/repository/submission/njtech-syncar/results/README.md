@@ -15,12 +15,17 @@ results/
 
 | 结果 | 数值 | 对应代码版本 (commit) | 配置文件 | 数据集版本 |
 |---|---|---|---|---|
-| 高通量筛选体系 | 已建立 96 孔板全细胞催化活力检测流程 | 待提交 | 不适用 | `data/raw/zero-shot 初筛吸光值.xlsx`；中期报告图 2-3 |
-| A342E 单点突变体 | 相较野生型催化活力提高约 45% | 待提交 | 不适用 | 中期报告图 5 |
-| N514Y 单点突变体 | 相较野生型催化活力提高约 67% | 待提交 | 不适用 | 中期报告图 5 |
-| D281P 单点突变体 | 相较野生型全细胞催化活力提高约 100% | 待提交 | 不适用 | 中期报告图 7 |
-| D281P/G420W/N514S 三突变体 | 在当前组合突变实验中表现出最高催化效率 | 待提交 | 不适用 | `data/raw/MAB2962 D281P-G420W-N514S.fa`；中期报告图 8 |
-| zero-shot 候选验证 | 最高约为三突变体活性的 1.12 倍 | 待提交 | 不适用 | `data/raw/zero-shot 初筛吸光值.xlsx`；`data/processed/round_0.xlsx`；中期报告图 9 |
+| 高通量筛选体系 | 已建立 96 孔板全细胞催化活力检测流程 | 不适用（湿实验） | 不适用 | `data/raw/round_0_screening.xlsx`；中期报告图 2-3 |
+| A342E 单点突变体 | 相较野生型催化活力提高约 45% | 不适用（湿实验） | 不适用 | 中期报告图 5 |
+| N514Y 单点突变体 | 相较野生型催化活力提高约 67% | 不适用（湿实验） | 不适用 | 中期报告图 5 |
+| D281P 单点突变体 | 相较野生型全细胞催化活力提高约 100% | 不适用（湿实验） | 不适用 | 中期报告图 7 |
+| D281P/G420W/N514S 三突变体 | 在当前组合突变实验中表现出最高催化效率 | 不适用（湿实验） | 不适用 | `data/raw/mab2962_psw.faa`；中期报告图 8 |
+| zero-shot 候选验证 | 最高约为三突变体活性的 1.12 倍 | 不适用（湿实验） | 不适用 | `data/raw/round_0_screening.xlsx`；`data/processed/round_0.xlsx`；中期报告图 9 |
+| round_1 复筛 | L335A 的相对 PSW 活性最高，为 1.554 倍（n=3） | 不适用（湿实验） | 不适用 | `data/raw/round_1_screening.xlsx`；`data/processed/round_1.xlsx` |
+| round_2 复筛 | L875V 的相对 PSW 活性最高，为 1.386 倍（n=3） | 不适用（湿实验） | 不适用 | `data/raw/round_2_screening.xlsx`；`data/processed/round_2.xlsx` |
+| 历史前向 benchmark（Spearman） | R0→R1：ESM2 0.467、RF 0.158、FCNN 0.137；R0→R2：0.033、0.073、−0.040；R0+R1→R2：0.033、0.071、0.118 | `src/ai/historical_benchmark/` | 固定时间划分；代码与协议见 `src/ai/historical_benchmark/README.md` | `data/processed/round_0.xlsx` 至 `round_2.xlsx` |
+| 纯酶催化 GABA 活性 | PSW-F430M 为 1.74 ± 0.21；PSW-L417A 为 1.61 ± 0.07（均相对 PSW，n=3） | 不适用（湿实验） | 不适用 | `data/raw/pure_enzyme_activity_normalized.xlsx` |
+| 全细胞 1,4-丁二胺催化 | PSW-F430M 为 1.423 ± 0.039；PSW-L417A 为 1.473 ± 0.142（均相对 PSW，n=3） | 不适用（湿实验） | 不适用 | `data/raw/whole_cell_catalysis.xlsx` |
 
 ## 关键图表索引
 
@@ -40,4 +45,4 @@ results/
 | `docs/中期进展汇报/中期进展图片/图8 以 D281P 为亲本，在 N514、G420位饱和突变获得的正向突变体的细胞催化活力-2.jpg` | 组合突变实验结果 |
 | `docs/中期进展汇报/中期进展图片/图9 Zero-shot预测后结果.jpg` | zero-shot 候选验证结果 |
 
-> 干实验训练指标暂不在本页列入；待训练与验证结果锁定后再补充到本表。
+> 历史 benchmark 的实际运行会在 `src/ai/historical_benchmark/results/` 生成逐候选预测、指标表和协议 JSON；提交前需将该次运行产物的哈希与运行环境补入。

@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="NJTech-SynCAR 以实验数据与人工智能改造 MAB2962 羧酸还原酶，探索从 L-谷氨酸到 1,4-丁二胺的绿色生物制造路线。" />
     <title>NJTech-SynCAR | AI–SynBio Challenge 2026</title>
-    <link rel="stylesheet" href="node_modules/molstar/build/viewer/molstar.css" />
+    <link rel="stylesheet" href="vendor/molstar/molstar.css" />
     <link rel="stylesheet" href="styles.css?v=20260909-runtime-fix" />
     <link rel="stylesheet" href="research.css?v=20260909-runtime-fix" />
-    <link rel="stylesheet" href="narrative.css?v=20260909-runtime-fix" />
+    <link rel="stylesheet" href="narrative.css?v=20260913-glass-icons" />
+    <link rel="stylesheet" href="blue-theme.css?v=20260913-team-marque" />
+    <link rel="stylesheet" href="round-browser.css?v=20260913-rounds" />
+    <link rel="stylesheet" href="research-art.css?v=20260913-header-art" />
   </head>
   <body>
     <header class="site-header">
@@ -49,7 +52,7 @@
             <div class="story-shell story-hero-grid">
               <div class="story-hero-copy">
                 <span class="story-kicker">NJTECH-SYNCAR · AI–SYNBIO CHALLENGE 2026</span>
-                <h1 id="overview-title">让羧酸还原酶，<br><em>更好地处理 GABA。</em></h1>
+                <h1 id="overview-title"><span class="project-title-lead">面向丁二胺生物制造的</span><br><em>AI 驱动羧酸还原酶</em><br>改造平台</h1>
                 <p>我们正在探索一条从 L-谷氨酸到 1,4-丁二胺的绿色生物制造路线，并用实验数据与人工智能共同改造其中的关键酶 CAR。</p>
                 <div class="story-actions">
                   <button class="story-primary-action" type="button" data-home-scroll-target="home-background">了解项目</button>
@@ -58,7 +61,7 @@
               </div>
               <figure class="story-structure home-reveal">
                 <div class="story-structure-frame"><img src="assets/home/hero/latest-complex-structure.png" alt="MAB2962 与 ATP、NADPH、镁离子及 GABA 的最新复合物对接构象" /></div>
-                <figcaption><b>MAB2962 COMPLEX</b><span>ATP · NADPH · Mg²⁺ · GABA</span><small>对接展示 · 未能量最小化</small></figcaption>
+                <figcaption><b>MAB2962 COMPLEX</b><span>ATP · NADPH · Mg²⁺ · GABA</span></figcaption>
               </figure>
             </div>
             <div class="story-shell reaction-route home-reveal" aria-label="从L-谷氨酸到1,4-丁二胺的生物制造路线">
@@ -133,7 +136,7 @@
             <div class="story-shell story-outlook-grid">
               <div class="story-heading home-reveal"><span class="story-kicker">FROM ONE ENZYME TO A METHOD</span><h2>从改造一个酶开始，<br>建立可复用的方法。</h2><p>我们希望以 MAB2962 为示范，建立面向羧酸还原酶底物适应性改造的 AI 辅助设计平台。当酶对目标底物的活性不足时，可以将序列、结构和实验数据结合起来，更有依据地寻找改造方案。</p><p>如果这一策略成功，它既能为 L-谷氨酸到 1,4-丁二胺的新型生物制造路线提供关键酶元件，也能为其他羧酸还原酶的改造提供参考。当前的实验和分析，正是迈向这一目标的起点。</p></div>
               <dl class="story-facts home-reveal">
-                <div><dt>目标酶</dt><dd>MAB2962</dd></div><div><dt>序列长度</dt><dd>1,184 aa</dd></div><div><dt>当前数据</dt><dd>28 个 Round 0 候选</dd></div>
+                <div><dt>目标酶</dt><dd>MAB2962</dd></div><div><dt>序列长度</dt><dd>1,184 aa</dd></div><div><dt>当前数据</dt><dd>R0—R2 实验与评估</dd></div>
               </dl>
               <div class="story-outlook-action home-reveal"><p>让每一轮实验都成为下一轮设计的依据。</p><button class="story-primary-action" type="button" data-view-target="design">进入 MutDesign 工作台</button></div>
             </div>
@@ -143,6 +146,12 @@
 
       <section id="team" class="page-view team-page" data-app-view="team" hidden aria-labelledby="team-title">
         <div id="home-team" class="team-chapter">
+          <div class="team-marque" aria-label="NJTech-SynCAR 团队理念">
+            <span class="team-marque-caption">ONE TEAM / ONE DIRECTION</span>
+            <strong>NJTech-SynCAR</strong>
+            <p>不同视角，共同驱动下一轮设计。</p>
+            <svg viewBox="0 0 1000 72" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 H360 C500 18 510 62 660 62 H1000"/><circle cx="360" cy="18" r="3"/><circle cx="660" cy="62" r="3"/></svg>
+          </div>
           <img class="team-prop team-prop-protein" src="assets/team/prop-protein-structure.png" alt="" decoding="async" aria-hidden="true" />
           <img class="team-prop team-prop-dashboard" src="assets/team/prop-data-dashboard.png" alt="" decoding="async" aria-hidden="true" />
           <img class="team-prop team-prop-lab" src="assets/team/prop-lab-equipment.png" alt="" decoding="async" aria-hidden="true" />
@@ -157,7 +166,7 @@
               <svg class="team-orbit-line" viewBox="0 0 1000 620" aria-hidden="true"><path d="M74 492 C176 285 306 522 427 282 S666 126 762 323 S897 530 962 376" /><path d="M74 521 C258 599 394 518 512 510 S761 550 962 411" /><circle cx="74" cy="492" r="5" /><circle cx="281" cy="433" r="5" /><circle cx="512" cy="259" r="7" /><circle cx="747" cy="327" r="5" /><circle cx="962" cy="376" r="5" /></svg>
               <article class="team-member team-member-01" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-01.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-01-laptop.png" alt="郑天恩" decoding="async" /><div class="team-member-label"><small>MEMBER 01</small><strong>郑天恩</strong></div></article>
               <article class="team-member team-member-02" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-02.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-02-tablet.png" alt="蔡一南" decoding="async" /><div class="team-member-label"><small>MEMBER 02</small><strong>蔡一南</strong></div></article>
-              <article class="team-member team-member-03" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-03.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-03-leader.png" alt="郑研老师" decoding="async" /><div class="team-member-label"><small>MEMBER 03</small><strong>郑研老师</strong></div></article>
+              <article class="team-member team-member-03" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-03.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-03-leader.png" alt="郑妍老师" decoding="async" /><div class="team-member-label"><small>MEMBER 03</small><strong>郑妍老师</strong></div></article>
               <article class="team-member team-member-04" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-04.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-04-notebook.png" alt="陈静雯" decoding="async" /><div class="team-member-label"><small>MEMBER 04</small><strong>陈静雯</strong></div></article>
               <article class="team-member team-member-05" tabindex="0"><img class="team-shadow" src="assets/team/shadow-member-05.png" alt="" decoding="async" aria-hidden="true" /><img class="team-avatar" src="assets/team/member-05-lab.png" alt="朱宏伟" decoding="async" /><div class="team-member-label"><small>MEMBER 05</small><strong>朱宏伟</strong></div></article>
             </div>
@@ -232,7 +241,7 @@
       </section>
 
       <section class="page-view data-page" data-app-view="experiments" hidden aria-labelledby="experiments-title">
-        <div class="page-scroll"><div class="page-heading"><div><span class="eyebrow">ROUND 0</span><h1 id="experiments-title">实验数据中心</h1><p>28 个四突变候选、三次重复、均值、标准差与相对 M3 活性。CV 仅作描述性统计，Wiki 尚未定义验收阈值。</p></div><span class="data-badge">来源：项目 Excel</span></div>
+        <div class="page-scroll"><div class="page-heading"><div><span class="eyebrow">ROUND 0</span><h1 id="experiments-title">实验数据中心</h1><p>历史 Round 0 展示：28 个四突变候选。新版正式候选表与 R1—R3 数据请在湿实验页面下载；本表保留原批次口径。CV 仅作描述性统计，尚未定义验收阈值。</p></div><span class="data-badge">来源：项目 Excel</span></div>
           <div class="data-layout"><section class="content-card chart-card"><div class="card-heading"><div><h2>相对 M3 活性排序</h2><p>1.0 为三突变亲本基线</p></div></div><canvas id="experiment-chart" width="900" height="340" aria-label="候选相对活性柱状图"></canvas></section>
           <section class="content-card experiment-table-card"><div class="filter-bar"><label>搜索突变<input id="experiment-search" placeholder="例如 Q191R 或 C412" /></label><label>实验结论<select id="experiment-direction"><option value="all">全部</option><option value="above">高于 M3</option><option value="below">低于 M3</option></select></label><span id="experiment-count">共 28 条</span></div><div class="data-table-wrap"><table><thead><tr><th>排名</th><th>新增突变</th><th>完整构建</th><th>重复 1/2/3</th><th>均值</th><th>SD</th><th>CV</th><th>相对 M3</th><th>结论</th></tr></thead><tbody id="experiment-table-body"></tbody></table></div></section></div>
           <section id="wet-lab-evidence" class="wet-lab-evidence experiment-evidence-section" aria-labelledby="wet-lab-title">
@@ -255,7 +264,7 @@
       <button id="evidence-dialog-close" class="dialog-close" type="button" aria-label="关闭原图">关闭</button>
       <figure><img id="evidence-dialog-image" alt="" /><figcaption><h2 id="evidence-dialog-title"></h2><p id="evidence-dialog-caption"></p></figcaption></figure>
     </dialog>
-    <script src="node_modules/molstar/build/viewer/molstar.js"></script>
-    <script type="module" src="src/app.js?v=20260909-gsap-complete"></script>
+    <script src="vendor/molstar/molstar.js"></script>
+    <script type="module" src="src/app.js?v=20260914-release"></script>
   </body>
 </html>

@@ -2,12 +2,22 @@
 
 > 设计文档、技术备忘录、演示稿、内部讨论纪要。
 
-## 目录建议
+## 当前评审核查入口
+
+- [评审表](./评审表/06_评审表_Judging_Form.docx)：正式评审表与逐项证据位置。
+- [正式历史 benchmark](../src/ai/historical_benchmark/README.md)：R0—R2 时间前向划分、基线、运行入口和结果输出协议。
+- [中期进展汇报](./中期进展汇报/07_中期进展汇报.docx)：已有阶段材料。
+
+后续评审文档优先在本镜像目录维护，只有尚未迁移的资料才回溯原来源；不将文档补全视作实验或模型验证完成。
+
+## 正式提交目录
 
 ```
 docs/
 ├── README.md
-├── design_decisions/    # ADR (Architecture Decision Record) 风格
-├── meeting_notes/       # 会议记录
-└── presentations/       # 答辩 / 路演演示稿
+├── 评审表/
+│   └── 06_评审表_Judging_Form.docx
+└── 中期进展汇报/
+    ├── 06_最终团队名单确认表.docx
+    └── 07_中期进展汇报.docx
 ```

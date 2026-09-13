@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+data/*.xlsx
+features/esm2_650m/
+results/*.csv
+results/*.json
+figures/*.png
+figures/*.svg
+!results/.gitkeep
+!figures/.gitkeep

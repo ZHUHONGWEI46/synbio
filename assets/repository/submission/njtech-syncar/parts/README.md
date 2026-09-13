@@ -1,16 +1,8 @@
 # parts · DNA 元件
 
-> 详见 `wiki/Parts.md`。
-> 本目录用于存放元件的序列文件（.fasta / .gb）、构建图谱（.svg）以及表征数据（链接到 results/figures/）。
+本目录包含本队提交的两个 DNA CDS 元件：
 
-## 目录建议
+- `AISB26-047-001`：PSW-F430M；
+- `AISB26-047-002`：PSW-L417A。
 
-```
-parts/
-├── README.md          # 本文件
-├── BBa_XXXX/
-│   ├── sequence.fa
-│   ├── plasmid_map.svg
-│   └── characterization.md   # 链接到 wet-lab 的对应实验
-└── …
-```
+每个元件目录均包含 `sequence.fasta`、`metadata.yaml`、`characterization.md` 和 `map.png`。原始表征工作簿位于 `data/raw/`；汇总说明见 [`wiki/Parts.md`](../wiki/Parts.md)。

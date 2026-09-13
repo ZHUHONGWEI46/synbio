@@ -13,7 +13,7 @@ test('loads GSAP locally and isolates navigation motion in its own module', () =
 
   assert.ok(pkg.dependencies.gsap, 'GSAP should be a local dependency');
   assert.match(app, /from '.\/motion\.js'/);
-  assert.match(motion, /from '\.\.\/node_modules\/gsap\/index\.js'/);
+  assert.match(motion, /from '\.\.\/vendor\/gsap\/index\.js'/);
   assert.match(motion, /export function initNavigationMotion/);
 });
 

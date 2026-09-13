@@ -26,6 +26,8 @@
 
 ### 必查页面（评审重点）
 
+- [评审表](../docs/评审表/06_评审表_Judging_Form.docx)
+
 - [Project Description｜项目描述](./Project-Description.md)
 - [Design｜设计方案](./Design.md)
 - ⭐ **[AI / Computational Methods｜AI / 计算方法](./AI-Computational-Methods.md)**
@@ -71,8 +73,8 @@
 
 - **队长邮箱**：2844550384@qq.com
 - **PI 邮箱**：zyan@njtech.edu.cn
-- **公开仓库**：待官方 Gitee 仓库同步后补充
+- **公开仓库**：[https://gitee.com/ai-synbio/njtech-syncar](https://gitee.com/ai-synbio/njtech-syncar)
 
 ---
 
-*最后更新：2026-07-15*
+*最后更新：2026-09-10*

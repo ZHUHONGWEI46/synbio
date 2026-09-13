@@ -24,6 +24,10 @@ export function initHomeMotion() {
     const top = scroller.getBoundingClientRect().top;
     let active = 0;
     chapters.forEach((chapter, index) => { if (chapter.getBoundingClientRect().top - top < scroller.clientHeight * .45) active = index; });
+    chapters.forEach((chapter) => {
+      const rect = chapter.getBoundingClientRect();
+      chapter.style.setProperty('--car-progress', Math.max(0, Math.min(1, (top + scroller.clientHeight * .7 - rect.top) / rect.height)));
+    });
     reading.querySelectorAll('button').forEach((button, index) => { button.classList.toggle('is-current', index === active); button.setAttribute('aria-current', index === active ? 'step' : 'false'); });
   };
   reading.addEventListener('click', (event) => {
@@ -66,7 +70,9 @@ export function initHomeMotion() {
       }));
     });
 
-    gsap.to('.story-structure-frame', { y: 9, rotation: -1.2, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    // Float only the protein image; keep the surrounding frame and ornaments still.
+    gsap.to('.car-concept-visual', { y: -7, duration: 3.8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.story-structure-frame img', { y: 9, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
     gsap.fromTo('.manufacturing-scene img', { y: 22 }, { y: -14, ease: 'none',
       scrollTrigger: { trigger: '#home-background', scroller, start: 'top bottom', end: 'bottom top', scrub: 1 } });
     gsap.to('.feedback-stage .feedback-path', { strokeDashoffset: -150, ease: 'none',

@@ -7,7 +7,7 @@ const read = (file) => fs.readFileSync(new URL(`../${file}`, import.meta.url), '
 test('turns the homepage into a seven-part public science story', () => {
   const html = read('index.html');
   assert.equal((html.match(/data-home-chapter="\d{2}"/g) ?? []).length, 7);
-  assert.match(html, /让羧酸还原酶/);
+  assert.match(html, /AI 驱动羧酸还原酶/);
   assert.match(html, /L-谷氨酸/);
   assert.match(html, /1,4-丁二胺/);
   assert.match(html, /如何让 CAR 更高效地/);
@@ -28,7 +28,7 @@ test('uses the latest supplied complex on the homepage with an honest qualifier'
   const html = read('index.html');
   assert.match(html, /assets\/home\/hero\/latest-complex-structure\.png/);
   assert.match(html, /ATP · NADPH · Mg²⁺ · GABA/);
-  assert.match(html, /对接展示 · 未能量最小化/);
+  assert.match(html, /最新复合物对接构象/);
 });
 
 test('keeps the team as an independent animated view', () => {
@@ -37,7 +37,7 @@ test('keeps the team as an independent animated view', () => {
   const motion = read('src/team-motion.js');
   assert.match(html, /id="team"[^>]+data-app-view="team"[^>]+hidden/);
   assert.equal((html.match(/assets\/team\/member-0[1-5]-[^"\s]+\.png/g) ?? []).length, 5);
-  for (const name of ['郑天恩', '蔡一南', '郑研老师', '陈静雯', '朱宏伟']) assert.match(html, new RegExp(name));
+  for (const name of ['郑天恩', '蔡一南', '郑妍老师', '陈静雯', '朱宏伟']) assert.match(html, new RegExp(name));
   assert.match(css, /\.team-constellation\s*\{/);
   assert.match(motion, /gsap\.timeline/);
   assert.match(motion, /prefers-reduced-motion: reduce/);

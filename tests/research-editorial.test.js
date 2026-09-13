@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { renderDocument, moduleGuide } from '../src/research-pages.js';
 import { feedbackDiagram } from '../src/narrative.js';
+globalThis.location = new URL('https://example.test/synbio/');
 
 test('engineering timeline retains all five original versions, dates and reasons', () => {
   const md = fs.readFileSync(new URL('../assets/repository/submission/njtech-syncar/wiki/Engineering-Cycle.md', import.meta.url), 'utf8');
@@ -19,8 +20,8 @@ test('engineering timeline retains all five original versions, dates and reasons
 });
 
 test('guide variants distinguish architecture, evidence boundaries and wet lab index', () => {
-  assert.match(moduleGuide('ai-methods'), /STAGE 01[\s\S]*STAGE 02/);
-  assert.match(moduleGuide('ai-methods'), /完整训练指标尚未锁定/);
+  assert.match(moduleGuide('ai-methods'), /ESM2-650M[\s\S]*RF 与 FCNN/);
+  assert.match(moduleGuide('ai-methods'), /历史 benchmark/);
   assert.match(moduleGuide('verifiability'), /尚待补齐的证据/);
   assert.match(moduleGuide('wet-lab'), /非完成状态/);
   assert.doesNotMatch(moduleGuide('engineering'), /<ol>/);

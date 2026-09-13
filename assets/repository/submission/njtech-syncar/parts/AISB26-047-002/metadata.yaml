@@ -1,0 +1,34 @@
+part_id: AISB26-047-002
+name: PSW-L417A
+type: CDS
+length_bp: 3555
+chassis: E. coli BL21(DE3)
+function: MAB2962 羧酸还原酶变体；催化 GABA 还原反应。
+
+design:
+  parent: Mycobacterium abscessus MAB2962 的 PSW 三突变体
+  additional_mutation: L417A
+  rationale: 以 ESM-2 35M 作为训练编码器，并以 ESM2-650M zero-shot 候选打分作为对照，结合湿实验筛选确定。
+  ai_assisted: true
+  ai_model: ESM-2 35M（训练编码器）；ESM2-650M（zero-shot 候选打分/对照）
+
+construction:
+  method: 全质粒反向 PCR
+  verified_by: DNA 测序验证
+
+characterization:
+  status: characterized
+  assays:
+    - 纯酶 GABA 活性测定
+    - 全细胞 1,4-丁二胺催化
+  replicates: 3
+  has_control: true
+  summary: 相对 PSW，纯酶归一化活性为 1.61 ± 0.07；全细胞 1,4-丁二胺相对产量为 1.473 ± 0.142。
+
+team:
+  team_no: '047'
+  team_name: NJTech-SynCAR
+  contact: 2844550384@qq.com
+
+confidential: false
+license: null

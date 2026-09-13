@@ -7,6 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Wiki](https://img.shields.io/badge/Wiki-/wiki-blue)](./wiki/Home.md)
 
+**公开仓库**：[https://gitee.com/ai-synbio/njtech-syncar](https://gitee.com/ai-synbio/njtech-syncar)
+
 ---
 
 ## 1. 项目简介 / Project Overview
@@ -17,7 +19,7 @@
 
 **核心方法**：结合半理性突变设计、高通量酶活筛选与蛋白序列结构特征建模，构建“实验数据反馈—AI 学习—突变预测—湿实验验证”的 CAR 定向改造闭环。
 
-**预期产出**：获得活性提升的 CAR 候选突变体及相关 DNA 元件，形成可追溯的酶活数据集、AI 预测模型与训练/推理脚本，并输出面向 1,4-丁二胺绿色生物制造的可复现技术路线、实验验证结果和 Wiki/报告材料。
+**已归档交付**：本提交区包含 R0—R2 的实验数据与时间前向 benchmark、PSW-F430M 和 PSW-L417A 两个经表征 DNA 元件、相应代码与环境说明，以及 Wiki、安全和评审材料。
 
 ---
 
@@ -35,9 +37,8 @@
 ├── src/
 │   ├── ai/                    # AI / 计算代码
 │   │   ├── README.md
-│   │   ├── models/            # 模型定义
-│   │   ├── data/              # 数据加载与预处理脚本
-│   │   └── scripts/           # 训练 / 推理 / 评估的入口脚本
+│   │   ├── historical_benchmark/     # R0—R2 时间前向 benchmark 与运行入口
+│   │   └── legacy_data_processing/   # 历史数据处理脚本，仅作溯源保留
 │   └── wet_lab/               # 与湿实验配套的脚本（数据分析、图表绘制等）
 │       └── README.md
 │
@@ -80,27 +81,22 @@
 
 ## 3. 快速开始 / Getting Started
 
-### 3.1 环境准备
+### 3.1 复现历史前向 benchmark
 
 ```bash
-python -m pip install -r requirements.txt
+python -m pip install -r src/ai/historical_benchmark/requirements.txt
+python src/ai/historical_benchmark/run_all.py
 ```
 
-> 完整 AI 训练脚本还依赖与本地硬件匹配的 PyTorch / ESM 相关环境；长时间训练前请先根据 `src/ai/` 中脚本和配置锁定依赖版本。
+该入口直接读取 `data/processed/round_0.xlsx`、`round_1.xlsx` 和 `round_2.xlsx`，输出三项按实验时间划分的历史 benchmark。运行前需具备 `src/ai/historical_benchmark/README.md` 所列的本地 ESM2-650M 缓存；程序不会联网下载模型。Round 3 仅用于高阶突变外推的 retrospective challenge，不在此 benchmark 中读取或使用。
 
-### 3.2 一键复现关键结果
+### 3.2 数据与材料
 
 ```bash
-# 当前一键复现流程正在完善中；可先查看中期材料、数据与阶段性结果索引
-ls docs/中期进展汇报
 ls data/raw data/processed
 cat data/README.md
 cat results/README.md
 ```
-
-> 完整训练 / 评估的一键复现命令待训练数据、模型权重与评估指标锁定后补充。
-
----
 
 ## 4. 给评审 / 同行的快速导航
 
@@ -141,7 +137,7 @@ cat results/README.md
   author = {NJTech-SynCAR},
   year   = {2026},
   note   = {AI + 合成生物创新大赛 2026 赛季},
-  url    = {待官方仓库同步后补充}
+  url    = {https://gitee.com/ai-synbio/njtech-syncar}
 }
 ```
 

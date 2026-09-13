@@ -27,3 +27,7 @@ test('hidden team artwork defers loading without replacing original pixels', () 
   assert.ok(images.length >= 10);
   assert.ok(images.every(img => img.includes('loading="lazy"')));
 });
+test('direct page routes display before sequence downloads finish', () => {
+  const init = read('src/app.js').split('async function initialiseWorkbench()')[1];
+  assert.ok(init.indexOf('commitAppView(initialView)') < init.indexOf('await loadProjectSequence()'));
+});

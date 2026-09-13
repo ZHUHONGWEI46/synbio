@@ -840,16 +840,16 @@ async function initialiseWorkbench() {
     setText('structure-subtitle', `MAB2962 · 链 A · 位点 ${position} · ${currentStructureLabel()}`);
   } });
   updateExperimentResult(selectedExperiment);
+  const initialView = viewFromHash(location.hash);
+  setWorkbenchNavigation(!['overview', 'team'].includes(initialView));
+  commitAppView(initialView);
+  afterAppViewChange(initialView);
   try {
     await loadProjectSequence();
     selectExperiment(selectedExperiment, { focus: false });
   } catch (error) {
     setStatus(error.message, 'error');
   }
-  const initialView = viewFromHash(location.hash);
-  setWorkbenchNavigation(!['overview', 'team'].includes(initialView));
-  commitAppView(initialView);
-  afterAppViewChange(initialView);
 }
 
 if (typeof document !== 'undefined') initialiseWorkbench();

@@ -148,14 +148,15 @@ test('offers the latest cofactor complex as a clearly qualified docking structur
   const html = read('index.html');
   const app = read('src/app.js');
 
-  assert.match(html, /<option selected value="complex">最新复合物对接构象/);
+  assert.match(html, /<option value="complex">历史 WT 参考复合物/);
+  assert.match(app, /desiredStructureSelection = 'dock:PSW'/);
   assert.match(html, /id="structure-source-note"/);
-  assert.match(html, /281、420、514仍为WT残基/);
+  assert.match(html, /PSW 三突变亲本对接模型，已核对 D281P\/G420W\/N514S/);
   for (const chain of ['B', 'C', 'D', 'E']) assert.match(html, new RegExp(`data-focus-chain="${chain}"`));
   assert.match(html, /id="reset-structure-view"/);
   assert.match(app, /loadStructureFromUrl\(path, format\)/);
   assert.match(app, /focusStructureElement/);
-  assert.match(app, /未能量最小化/);
+  assert.match(app, /未经能量最小化/);
 });
 
 test('left controls expose only real choices and visible loading state', () => {

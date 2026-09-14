@@ -1,6 +1,6 @@
 import { candidates, parentMutations } from './data.js';
 import { experiments } from './experiment-data.js';
-import { initRoundBrowser, findRoundExperiment } from './round-browser.js?v=20260913-rounds';
+import { initRoundBrowser, findRoundExperiment } from './round-browser.js?v=20260914-docking-variants';
 import {
   coefficientOfVariation,
   experimentStatus,
@@ -11,9 +11,12 @@ import {
 } from './experiments.js';
 import { evidenceFigures, pocketSites, wetLabMilestones } from './midterm-evidence.js';
 import { initNavigationMotion } from './motion.js';
-import { initHomeMotion } from './home-motion.js?v=20260913-silver-enzyme';
-import { initResearchPages } from './research-pages.js?v=20260913-header-art';
-import { initNarrative } from './narrative.js?v=20260913-alpha-fix';
+import { initHomeMotion } from './home-motion.js?v=20260914-reaction-journey';
+import { initCatalyticRoute } from './catalytic-route.js?v=20260914-native-sticky';
+import { initMobileLayout } from './mobile-layout.js';
+import { dockingModels, dockingModel, dockingPath, matchingDockingModel, dockingMatches } from './docking-models.js';
+import { initResearchPages } from './research-pages.js?v=20260914-docking-variants';
+import { initNarrative } from './narrative.js?v=20260914-psw-hero';
 import { initTeamMotion } from './team-motion.js';
 import { createDemoPrediction } from './demo-prediction.js';
 import {
@@ -49,7 +52,12 @@ let structureViewerLoading = false;
 let navigationMotion;
 let homeMotion;
 let teamMotion;
+let roundBrowser;
 let currentStructureKind = 'complex';
+let currentStructureSelection = 'dock:PSW';
+let desiredStructureSelection = 'dock:PSW';
+let structureLoadQueue = Promise.resolve();
+let loadedStructureSelection;
 let paeLoaded = false;
 let batchRows = [];
 
@@ -63,6 +71,7 @@ export function viewFromHash(hash = '') {
 export function modelPathForSelection(selection) {
   const normalized = String(selection ?? '').trim();
   if (normalized === 'complex') return 'assets/structures/MAB2962-complex-docking.pdb';
+  if (dockingPath(normalized)) return dockingPath(normalized);
   const match = normalized.match(/(?:模型\s*)?([0-4])$/);
   if (!match) return undefined;
   const modelIndex = match[1];
@@ -70,9 +79,19 @@ export function modelPathForSelection(selection) {
 }
 
 function currentStructureLabel() {
+  const model = dockingModel(currentStructureSelection);
+  if (model) return `${model.id} 对接构象 · ${dockingMatches(currentStructureSelection,currentCandidateMutation())?'候选专属模型':'参考位点映射'}`;
   return currentStructureKind === 'complex'
-    ? '最新复合物对接构象 · 未能量最小化'
+    ? '历史 WT 参考复合物 · 位点映射'
     : `AlphaFold3 真实结构模型 ${currentModelIndex}`;
+}
+
+function currentCandidateMutation() {
+  return [currentParent==='M3'?PARENT_MUTATIONS.join('/'):'',currentAddition].filter(Boolean).join('/');
+}
+function syncCandidateStructure() {
+  const model = matchingDockingModel(currentCandidateMutation());
+  return loadStructureModel(`dock:${model?.id ?? (currentParent==='M3'?'PSW':'WT')}`);
 }
 
 export function analysisGroupsForControls(settings = {}) {
@@ -232,6 +251,42 @@ function focusStructureElement(chainId, label) {
   }
 }
 
+function renderDockingMutations(model) {
+  const row = document.getElementById('docking-mutations');
+  if (!row) return;
+  row.replaceChildren();
+  const label = document.createElement('small');
+  label.textContent = model ? `所选结构：${model.id} · 突变位点仅定位` : 'AF3 参考模型 · 候选位点映射';
+  row.append(label);
+  for (const token of model?.mutation.split('/').filter(Boolean) ?? []) {
+    const button = document.createElement('button');
+    button.type = 'button'; button.textContent = token;
+    button.addEventListener('click',()=>{focusResidue(Number(token.match(/\d+/)[0]));setText('structure-distance',`${model.id} · ${token} · 已聚焦；候选不变`);});
+    row.append(button);
+  }
+}
+
+function configureDockingUI() {
+  const selector = document.getElementById('structure-select');
+  for (const model of [...dockingModels].reverse()) {
+    const option = document.createElement('option');
+    option.value = `dock:${model.id}`; option.textContent = `${model.label} · 对接复合物`;
+    selector.prepend(option);
+  }
+  selector.value = desiredStructureSelection;
+  renderDockingMutations(dockingModel(desiredStructureSelection));
+  document.getElementById('match-candidate-structure').addEventListener('click',syncCandidateStructure);
+  document.addEventListener('click',event=>{
+    const link = event.target.closest('[data-docking-model]');
+    if (!link) return;
+    const model = dockingModel(`dock:${link.dataset.dockingModel}`);
+    if (!model) return;
+    event.preventDefault();
+    if (model.parent==='M3' && model.addition) roundBrowser?.selectMutation(model.mutation,true);
+    switchAppView('design'); loadStructureModel(`dock:${model.id}`);
+  });
+}
+
 function updateExperimentResult(experiment) {
   selectedExperiment = experiment;
   setText('experiment-result-title', !experiment ? '当前轮次实验结果' : experiment.normalized ? `${experiment.round} 正式实验结果 · 相对 PSW` : '历史 R0 原始读数');
@@ -253,7 +308,10 @@ function updateExperimentResult(experiment) {
   const gain = (experiment.relativeToParent - 1) * 100;
   setText('experiment-relative', `${experiment.relativeToParent.toFixed(3)}×`);
   setText('experiment-status', experiment.round === 'R3' ? '实测 · 回顾性挑战' : '已有实测记录');
-  setText('experiment-summary', `${experiment.fullMutation} 相对 ${experiment.normalized ? '同批次 PSW' : 'M3 亲本'}${gain >= 0 ? '提高' : '降低'} ${Math.abs(gain).toFixed(1)}%。${experiment.normalized ? '当前结构仅用于位点映射，非该变体专属结构。' : ''}`);
+  const structureNote = dockingMatches(currentStructureSelection,experiment.fullMutation)
+    ? '已匹配该变体的对接模型；对接构象不等同于实验解析结构。'
+    : '当前结构仅用于位点映射，非该变体专属结构。';
+  setText('experiment-summary', `${experiment.fullMutation} 相对 ${experiment.normalized ? '同批次 PSW' : 'M3 亲本'}${gain >= 0 ? '提高' : '降低'} ${Math.abs(gain).toFixed(1)}%。${experiment.normalized ? structureNote : ''}`);
   setText('experiment-mean', experiment.mean.toFixed(4));
   setText('experiment-sd', experiment.replicates.length > 1 ? sampleStandardDeviation(experiment.replicates).toFixed(4) : '—');
   setText('experiment-cv', experiment.replicates.length > 1 && experiment.mean !== 0 ? `${coefficientOfVariation(experiment.replicates).toFixed(2)}%` : '—');
@@ -275,11 +333,12 @@ function selectExperiment(experiment, { focus = true } = {}) {
   setText('structure-subtitle', `MAB2962 · 链 A · 位点 ${mutation.position} · ${currentStructureLabel()}`);
   updateMutationPreview(experiment.mutation);
   updateExperimentResult(experiment);
+  syncCandidateStructure();
   renderSequence(mutation.position);
   document.querySelectorAll('[data-candidate]').forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.candidate === experiment.mutation));
   });
-  setStatus(`${experiment.fullMutation} 已读取 ${experiment.round} 实测结果；参考结构位点映射。`, 'ready');
+  setStatus(`${experiment.fullMutation} 已读取 ${experiment.round} 实测结果；${matchingDockingModel(experiment.fullMutation)?'匹配专属对接模型':'参考结构位点映射'}。`, 'ready');
   setText('selection-feedback', `当前显示 ${mutationLabel(experiment.mutation)} 的真实实验结果。`);
   if (focus) focusResidue(mutation.position);
 }
@@ -354,6 +413,7 @@ function generateDesign() {
   }
   const experiment = currentParent === 'M3' ? findRoundExperiment(validation.normalized) : undefined;
   updateExperimentResult(experiment);
+  syncCandidateStructure();
   setStatus(experiment ? `${validation.normalized} 已读取真实实验结果。` : `${validation.normalized} 已生成突变序列；状态：待实验。`, 'ready');
 }
 
@@ -362,10 +422,11 @@ function applyParent(parent) {
   parentSequence = parent === 'M3' && m3Sequence ? m3Sequence : buildParentSequence(wildTypeSequence, parent);
   setText('parent-context-label', parent === 'M3' ? PARENT_MUTATIONS.join('/') : 'WT · MAB2962');
   setText('sequence-note', parent === 'M3'
-    ? `${m3Sequence ? 'M3 序列来自项目 FASTA，已与 WT 校验仅含 D281P/G420W/N514S' : 'M3 FASTA 未载入，当前按声明突变从 WT 生成备用序列'}；三突变体暂使用 WT 结构进行位点映射。`
+    ? `${m3Sequence ? 'M3 序列来自项目 FASTA，已与 WT 校验仅含 D281P/G420W/N514S' : 'M3 FASTA 未载入，当前按声明突变从 WT 生成备用序列'}；结构自动匹配专属对接模型，无匹配时使用 PSW 参考模型。`
     : '当前显示 MAB2962 野生型序列与真实 AlphaFold3 结构。');
   updateFromControls();
   renderSequence();
+  syncCandidateStructure();
 }
 
 function commitAppView(view) {
@@ -629,6 +690,24 @@ function exportBatchFasta() {
 }
 
 async function loadStructureModel(selection, clearExisting = true) {
+  if (!modelPathForSelection(selection)) return false;
+  desiredStructureSelection = selection;
+  const selector = document.getElementById('structure-select');
+  if (selector) selector.value = selection;
+  if (!structureViewer) return false;
+  structureLoadQueue = structureLoadQueue.catch(()=>false).then(() => {
+    if (selection !== desiredStructureSelection) return false;
+    if (loadedStructureSelection === selection) {
+      setText('structure-subtitle', `MAB2962 · 链 A · 位点 ${selectedPosition()} · ${currentStructureLabel()}`);
+      updateExperimentResult(selectedExperiment);
+      return true;
+    }
+    return loadStructureNow(selection,clearExisting);
+  });
+  return structureLoadQueue;
+}
+
+async function loadStructureNow(selection, clearExisting = true) {
   const path = modelPathForSelection(selection);
   if (!path || !structureViewer) return false;
   const isComplex = path.endsWith('.pdb');
@@ -640,14 +719,23 @@ async function loadStructureModel(selection, clearExisting = true) {
   host?.setAttribute('aria-busy', 'true');
   setText('structure-model-badge', isComplex ? '载入复合物…' : `载入 Model ${modelIndex}…`);
   try {
-    if (clearExisting) await structureViewer.plugin.clear();
+    if (clearExisting) {
+      loadedStructureSelection = undefined;
+      await structureViewer.plugin.clear();
+    }
     await structureViewer.loadStructureFromUrl(path, format);
     currentStructureKind = isComplex ? 'complex' : 'alphafold';
+    currentStructureSelection = selection;
+    loadedStructureSelection = selection;
+    host?.classList.remove('has-load-error');
+    const model = dockingModel(selection);
     if (!isComplex) currentModelIndex = modelIndex;
-    setText('structure-model-badge', isComplex ? '对接构象 · PDB' : `真实 mmCIF · Model ${modelIndex}`);
-    setText('structure-model-file', isComplex ? '已载入 MAB2962-complex-docking.pdb' : `已载入 model_${modelIndex}.cif`);
+    setText('structure-model-badge', model ? `${model.id} · 对接 PDB` : isComplex ? '历史对接构象 · PDB' : `预测 mmCIF · Model ${modelIndex}`);
+    setText('structure-model-file', model ? `已载入 ${model.file}` : isComplex ? '已载入 MAB2962-complex-docking.pdb' : `已载入 model_${modelIndex}.cif`);
     setText('structure-subtitle', `MAB2962 · 链 A · 位点 ${selectedPosition()} · ${currentStructureLabel()}`);
-    setText('structure-source-note', isComplex
+    setText('structure-source-note', model
+      ? `${model.label}。已核对 A 链 1,184 个残基，突变：${model.mutation||'无（WT）'}。GNINA GABA 对接代表构象，AF3 来源受体，未经能量最小化；非实验解析结构。结构选择不改变候选序列或实验批次。`
+      : isComplex
       ? '对接展示：文件名标为“三突”，但坐标中281、420、514仍为WT残基；该复合物基于AF3受体、未经能量最小化，不代表实验解析结构。'
       : `AlphaFold3 模型 ${modelIndex}：用于蛋白位点定位；当前 M3 暂映射在亲本结构上。`);
     const stats = isComplex
@@ -660,7 +748,12 @@ async function loadStructureModel(selection, clearExisting = true) {
     document.querySelectorAll('[data-focus-chain]').forEach((button) => { button.disabled = !isComplex; });
     const resetView = document.getElementById('reset-structure-view');
     if (resetView) resetView.disabled = !isComplex;
-    focusResidue(selectedPosition());
+    // Fit the new coordinate set before any user-requested site focus. Keeping
+    // an old model's focused camera across plugin.clear() can yield a blank view.
+    structureViewer.plugin.managers.camera.reset();
+    syncStructureActivity();
+    renderDockingMutations(model);
+    updateExperimentResult(selectedExperiment);
     return true;
   } catch (error) {
     host?.classList.add('has-load-error');
@@ -721,7 +814,7 @@ async function initialiseStructureViewer() {
       viewportBackgroundColor: '#f8faff',
     });
     syncStructureActivity();
-    await loadStructureModel('complex', false);
+    await loadStructureModel(desiredStructureSelection, false);
     syncStructureActivity();
   } catch (error) {
     host.classList.add('has-load-error');
@@ -822,15 +915,19 @@ async function initialiseWorkbench() {
   bindNavigation();
   bindViewerTabs();
   bindControls();
+  configureDockingUI();
   renderMidtermEvidence();
   initResearchPages();
+  initMobileLayout();
   initNarrative();
+  try { initCatalyticRoute(); } catch (error) { console.warn('Catalytic route motion unavailable; keeping the complete route visible.', error); }
   try { homeMotion = initHomeMotion(); } catch (error) { console.warn('Home motion unavailable; continuing without it.', error); homeMotion = undefined; }
   try { teamMotion = initTeamMotion(); } catch (error) { console.warn('Team motion unavailable; continuing without it.', error); teamMotion = undefined; }
   renderCandidateRanking();
   renderExperimentTable();
-  initRoundBrowser({ onSelect: (experiment, navigate) => {
+  roundBrowser = initRoundBrowser({ onSelect: (experiment, navigate) => {
     if (currentParent !== 'M3') applyParent('M3');
+    document.getElementById('parent-select').value = 'M3';
     selectExperiment(experiment);
     if (navigate) switchAppView('design');
   }, onFocus: (position) => {

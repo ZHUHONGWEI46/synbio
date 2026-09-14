@@ -49,8 +49,7 @@ export function initHomeMotion() {
       .from('.story-hero-copy .title-line-inner', titleMotion, '-=.25')
       .to('.story-hero-copy h1 em', { '--ink-progress': '100%', duration: .8, ease: 'power2.inOut' }, '-=.45')
       .from('.story-hero-copy > p, .story-actions', { opacity: 0, y: 16, duration: 0.65, stagger: 0.12 }, '-=.65')
-      .from('.story-structure', { opacity: 0, x: 38, scale: 0.96, duration: 0.78 }, '-=.62')
-      .from('.reaction-route', { opacity: 0, y: 18, duration: 0.5 }, '-=.34');
+      .from('.story-structure', { opacity: 0, x: 38, scale: 0.96, duration: 0.78 }, '-=.62');
 
     root.querySelectorAll('.story-heading, .story-loop-heading').forEach((heading) => {
       const title = heading.querySelector('h2');

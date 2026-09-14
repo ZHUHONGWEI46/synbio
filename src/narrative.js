@@ -27,7 +27,7 @@ export function initNarrative() {
   root.querySelector('.story-hero-copy > p').insertAdjacentHTML('beforebegin', '<p class="car-tagline">为生物制造，调校一台分子引擎。</p>');
   const structure = root.querySelector('.story-structure');
   structure.classList.add('car-engine-stage');
-  structure.insertAdjacentHTML('afterbegin', '<div class="car-concept-visual"><img class="car-shell-art" src="assets/home/hero/car-molecular-silver.png" alt="银蓝玻璃跑车外壳，作为 CAR 分子引擎的概念容器"/><div class="car-enzyme-chamber"><img src="assets/home/hero/latest-complex-structure.png" alt="车身中央展示最新 MAB2962 复合物结构渲染"/></div><span>CAR / MOLECULAR ENGINE</span><small>概念车壳 × 实际结构渲染</small></div>');
+  structure.insertAdjacentHTML('afterbegin', '<div class="car-concept-visual"><img class="car-shell-art" src="assets/home/hero/car-molecular-silver.png" alt="银蓝玻璃跑车外壳，作为 CAR 分子引擎的概念容器"/><div class="car-enzyme-chamber"><img src="assets/home/hero/psw-complex-horizontal.png" alt="车身中央展示 PSW 三突变母本的实际对接结构渲染"/></div><span>CAR / MOLECULAR ENGINE</span><small>概念车壳 × PSW 对接结构</small></div>');
   // Reuse the complete source paragraphs, pairing each with its design step.
   const design = root.querySelector('#home-design-story');
   const paragraphs = [...design.querySelectorAll('.editorial-body > p')];

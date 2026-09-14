@@ -1,4 +1,5 @@
 import { feedbackDiagram } from './narrative.js?v=20260909-gsap-complete';
+import { dockingModels } from './docking-models.js';
 const base = 'assets/repository/submission/njtech-syncar/wiki/';
 export const researchModules = [
   ['validation', '干湿闭环', 'Integrated-Validation.md', '从候选设计到实验反馈，追踪每一轮验证。'],
@@ -136,7 +137,9 @@ export function initResearchPages() {
         if (!heading) return;
         selectedByClick = i;
         select(i);
-        const target = scroller.scrollTop + heading.getBoundingClientRect().top - scroller.getBoundingClientRect().top - 22;
+        // Leave room for the collapsed sticky mobile directory above the heading.
+        const anchorOffset = matchMedia('(max-width: 760px)').matches ? 100 : 22;
+        const target = scroller.scrollTop + heading.getBoundingClientRect().top - scroller.getBoundingClientRect().top - anchorOffset;
         scroller.scrollTo({ top: Math.max(0, target), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       }));
       const resumeTracking = () => { selectedByClick = null; requestAnimationFrame(updateContents); };
@@ -161,6 +164,11 @@ function appendEvidence(section) {
   const evidence = document.createElement('section'); evidence.id = 'latest-wet-results';
   evidence.innerHTML = `<h2>新增结果与数据文件</h2><p>F430M 与 L417A 的全细胞催化和纯酶活性图分别展示，归一化含义以各图标注为准。新增批次原始表独立保留，不与 Round 0 自动合并。</p><div class="research-figures">${['F430M和L417A全细胞催化归一化数据.jpg', 'F430M和L417A酶活测定归一化数据.jpg'].map((file) => `<figure><a href="assets/repository/results/figures/${file}" target="_blank" rel="noopener"><img loading="lazy" src="assets/repository/results/figures/${file}" alt="${file.replace('.jpg','')}" /></a><figcaption>${file.replace('.jpg','')} · 点击查看原图</figcaption></figure>`).join('')}</div>`;
   article.append(evidence);
+  const structures = document.createElement('section');
+  structures.id = 'variant-docking-structures';
+  structures.innerHTML = '<h2>变体对接结构</h2><p>已核对 8 个模型的 A 链残基与突变构建。下列实验候选可在工作台查看对应模型；结构来自 AF3 来源受体的 GNINA 对接代表构象，未经能量最小化，不作为实测活性或机制已验证的证据。</p><div class="docking-evidence-links">'+dockingModels.filter(model=>model.parent==='M3'&&model.addition).map(model=>`<a href="#design" data-docking-model="${model.id}"><strong>${model.id}</strong><span>${model.addition.includes('/')?'R3 · 五突变回顾性挑战':'R1 · 四突变候选'} ↗</span></a>`).join('')+'</div><p>WT、PSW 亲本与 WT 背景 G980M 单突变模型可通过工作台“结构来源”独立查看。G980M 单突变与 PSW-G980M 四突变不能互换实验结果。</p>';
+  evidence.before(structures);
+  section.querySelector('.research-contents').insertAdjacentHTML('beforeend','<button type="button" data-research-anchor="variant-docking-structures">变体对接结构</button>');
   const parts = document.createElement('section');
   parts.innerHTML = '<h2>已表征 DNA 元件</h2><p>PSW-F430M 与 PSW-L417A：纯酶相对活性分别为 1.74 ± 0.21、1.61 ± 0.07；全细胞相对产物表现分别为 1.423 ± 0.039、1.473 ± 0.142（相对 PSW，n=3）。</p>' + ['001', '002'].map((n, i) => '<p><strong>AISB26-047-' + n + ' · ' + ['PSW-F430M', 'PSW-L417A'][i] + '</strong> · <a href="assets/repository/submission/njtech-syncar/parts/AISB26-047-' + n + '/sequence.fasta" download>CDS 序列</a> · <a href="assets/repository/submission/njtech-syncar/parts/AISB26-047-' + n + '/characterization.md" target="_blank" rel="noopener">表征记录</a></p>').join('');
   evidence.before(parts);

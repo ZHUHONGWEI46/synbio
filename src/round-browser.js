@@ -86,7 +86,13 @@ export function initRoundBrowser({ onSelect, onRound, onFocus }) {
     const max = Math.max(1, ...rows.map(x => x.average ?? 0));
     layout.querySelector('[data-round-bars]').innerHTML = rows.slice(0,10).map(x => `<button type="button" data-round-record="${x.id}"><span>${escape(x.mutation)}</span><i style="--bar-width:${(x.average??0)/max*100}%"><b></b><em style="left:${100/max}%"></em></i><strong>${format(x.average)}×</strong></button>`).join('')+'<small>前十候选 · 竖线为 PSW 1.0 基线 · 点击联动结构位点</small>';
     layout.querySelector('[data-round-table]').innerHTML = rows.map(x => { const s=roundStatistics(x); return `<tr><td>${all.indexOf(x)+1}</td><td>${escape(x.mutation)}</td><td>${escape(x.fullMutation)}</td><td>${x.replicates.map(v=>format(v,4)).join(' / ')}</td><td>${s.n}</td><td>${format(x.average,4)}×</td><td>${format(s.sd,4)}</td><td>${format(s.cv,2)}</td><td><button type="button" class="candidate-button" data-round-record="${x.id}">定位位点 ↗</button></td></tr>`; }).join('') || '<tr><td colspan="9">无匹配记录</td></tr>';
-    layout.querySelector('[data-round-source]').textContent = `来源：data/processed/round_${activeRound}.xlsx · Sheet1。空值保留为 —；有效重复少于 2 时不计算 SD/CV。结构联动为参考结构上的位点映射，不代表此变体已有专属结构。`;
+    layout.querySelector('[data-round-source]').textContent = `来源：data/processed/round_${activeRound}.xlsx · Sheet1。空值保留为 —；有效重复少于 2 时不计算 SD/CV。结构按完整构建匹配已有对接模型；没有专属模型时仅作参考位点映射。`;
   }
   render();
+  return { selectMutation(fullMutation,navigate = true) {
+    const normalized = normalizeMutations(fullMutation);
+    const row = roundRecords.find(record=>normalizeMutations(record.fullMutation)===normalized);
+    if (!row) return false;
+    choose(row.id,navigate); return true;
+  } };
 }

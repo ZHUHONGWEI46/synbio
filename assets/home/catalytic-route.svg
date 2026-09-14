@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="460" viewBox="0 0 1500 460" style="display:block;width:100%;height:auto" role="img" aria-labelledby="title description">
+  <title id="title">从 L-谷氨酸到 1,4-丁二胺的完整催化路线</title>
+  <desc id="description">L-谷氨酸经 GadA 脱羧生成 GABA；GABA 经关键限速酶 CAR 还原为 4-氨基丁醛；随后经 TA 转氨生成 1,4-丁二胺。研究路线示意，不表示实测反应速率。</desc>
+  <defs>
+    <linearGradient id="rail" x1="0" x2="1"><stop stop-color="#a3c4e5" stop-opacity=".05"/><stop offset=".5" stop-color="#6096d4" stop-opacity=".4"/><stop offset="1" stop-color="#a3c4e5" stop-opacity=".05"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#c9dff7" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="engine" x1="0" x2="1"><stop stop-color="#8fb8e6" stop-opacity=".15"/><stop offset=".5" stop-color="#437fc8" stop-opacity=".75"/><stop offset="1" stop-color="#8fb8e6" stop-opacity=".15"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#abcdf2" stop-opacity=".4"/><stop offset="1" stop-color="#abcdf2" stop-opacity="0"/></radialGradient>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 6 3.5 0 7" fill="none" stroke="#739bc5" stroke-width="1.2"/></marker>
+    <marker id="car-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 6 3.5 0 7" fill="none" stroke="#3779c9" stroke-width="1.2"/></marker>
+    <style>
+      text { font-family: 'PingFang SC','Microsoft YaHei',Arial,sans-serif; }
+      .bond { fill:none;stroke:#294a69;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round; }
+      .atom { fill:#294a69;font-size:21px;font-family:Arial,sans-serif; }
+      .name { fill:#203e5f;font-size:23px;font-weight:600; }
+      .english { fill:#7189a4;font-size:13px;letter-spacing:.3px; }
+      .caption { fill:#7891ab;font-size:11px;letter-spacing:1.4px; }
+      .enzyme { fill:#416a96;font-size:21px;font-weight:600; }
+      .sub { fill:#8297af;font-size:12px; }
+    </style>
+  </defs>
+  <path d="M44 82H1456" stroke="#d9e5f2"/>
+  <text x="54" y="51" class="caption">THE CATALYTIC ROUTE / 完整催化路线</text>
+  <text x="1450" y="51" text-anchor="end" class="caption">NJTECH–SYNCAR · MOLECULAR ENGINE</text>
+  <ellipse cx="737" cy="211" rx="178" ry="145" fill="url(#halo)"/>
+  <path d="M54 241C300 290 480 295 650 255S1090 279 1450 241" fill="none" stroke="url(#rail)" stroke-width="1"/>
+  <path d="M54 251C290 305 490 299 650 267S1110 292 1450 251" fill="none" stroke="url(#rail)" stroke-width=".7"/>
+
+  <!-- L-glutamate: HOOC–CH2–CH2–CH(NH2)–COOH, L stereochemistry as supplied. -->
+  <g id="molecule-glutamate" transform="translate(57 151)">
+    <text x="0" y="79" class="atom">HO</text>
+    <path class="bond" d="M34 68L59 54L96 76L133 54L170 76L207 54L236 70M56 51V25M63 51V25M204 51V25M211 51V25"/>
+    <text x="51" y="18" class="atom">O</text><text x="200" y="18" class="atom">O</text><text x="239" y="81" class="atom">OH</text>
+    <path d="M170 77L164 111H176Z" fill="#294a69"/>
+    <text x="155" y="134" class="atom">NH<tspan baseline-shift="sub" font-size="13">2</tspan></text>
+    <text x="138" y="174" text-anchor="middle" class="name">L-谷氨酸</text>
+    <text x="138" y="199" text-anchor="middle" class="english">L-Glutamate</text>
+    <text x="138" y="227" text-anchor="middle" class="caption">01 / 起始原料</text>
+  </g>
+  <g id="reaction-gada">
+    <text x="387" y="174" text-anchor="middle" class="enzyme">GadA</text>
+    <path d="M331 213H435" stroke="#739bc5" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="384" y="249" text-anchor="middle" class="sub">脱羧 · 释放 CO<tspan baseline-shift="sub" font-size="9">2</tspan></text>
+  </g>
+  <!-- GABA: H2N–CH2–CH2–CH2–COOH. -->
+  <g id="molecule-gaba" transform="translate(443 151)">
+    <text x="0" y="80" class="atom">H<tspan baseline-shift="sub" font-size="13">2</tspan>N</text>
+    <path class="bond" d="M43 68L66 80L102 58L138 80L174 58L202 74M171 55V29M178 55V29"/>
+    <text x="166" y="21" class="atom">O</text><text x="205" y="85" class="atom">OH</text>
+    <text x="114" y="174" text-anchor="middle" class="name">GABA</text>
+    <text x="114" y="199" text-anchor="middle" class="english">γ-氨基丁酸</text>
+    <text x="114" y="227" text-anchor="middle" class="caption">02 / CAR 的目标底物</text>
+  </g>
+  <!-- Engine gate is decoration around the reaction arrow, not molecular bonds. -->
+  <g id="reaction-car">
+    <rect x="687" y="104" width="113" height="31" rx="15.5" fill="url(#glass)" stroke="#a8c8ee"/>
+    <circle cx="704" cy="119.5" r="3" fill="#4b87cb"/>
+    <text x="749" y="124" text-anchor="middle" fill="#3c77be" font-size="11" font-weight="600">关键限速酶</text>
+    <text x="744" y="174" text-anchor="middle" fill="#2b6ebc" font-size="28" font-weight="700" letter-spacing="2">CAR</text>
+    <path d="M688 191C710 191 714 205 731 205H754C772 205 776 191 798 191M688 235C710 235 714 221 731 221H754C772 221 776 235 798 235" fill="none" stroke="url(#engine)" stroke-width="1.8"/>
+    <path d="M688 182C715 182 718 198 732 198H753C769 198 774 182 798 182M688 244C715 244 718 228 732 228H753C769 228 774 244 798 244" fill="none" stroke="#93b9e4" stroke-opacity=".45"/>
+    <path d="M687 213H797" stroke="#3779c9" stroke-width="2.4" marker-end="url(#car-arrow)"/>
+    <circle cx="698" cy="213" r="2.4" fill="#80ade0"/><circle cx="710" cy="213" r="2.4" fill="#80ade0"/><circle cx="722" cy="213" r="2.4" fill="#80ade0"/>
+    <text x="744" y="273" text-anchor="middle" fill="#3f78bb" font-size="12" font-weight="600">本项目改造对象</text>
+    <text x="744" y="297" text-anchor="middle" class="sub">羧酸 → 醛</text>
+  </g>
+  <!-- 4-aminobutyraldehyde: H2N–CH2–CH2–CH2–CHO. -->
+  <g id="molecule-aldehyde" transform="translate(823 151)">
+    <text x="0" y="80" class="atom">H<tspan baseline-shift="sub" font-size="13">2</tspan>N</text>
+    <path class="bond" d="M43 68L66 80L102 58L138 80L174 58L202 74M171 55V29M178 55V29"/>
+    <text x="166" y="21" class="atom">O</text><text x="207" y="85" class="atom">H</text>
+    <text x="112" y="174" text-anchor="middle" class="name">4-氨基丁醛</text>
+    <text x="112" y="199" text-anchor="middle" class="english">4-Aminobutyraldehyde</text>
+    <text x="112" y="227" text-anchor="middle" class="caption">03 / 中间产物</text>
+  </g>
+  <g id="reaction-ta">
+    <text x="1113" y="174" text-anchor="middle" class="enzyme">TA</text>
+    <path d="M1060 213H1167" stroke="#739bc5" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="1113" y="249" text-anchor="middle" class="sub">转氨 · 醛 → 胺</text>
+  </g>
+  <!-- Putrescine: H2N–CH2–CH2–CH2–CH2–NH2. -->
+  <g id="molecule-putrescine" transform="translate(1191 151)">
+    <text x="0" y="80" class="atom">H<tspan baseline-shift="sub" font-size="13">2</tspan>N</text>
+    <path class="bond" d="M43 68L66 80L102 58L138 80L174 58L201 74"/>
+    <text x="205" y="85" class="atom">NH<tspan baseline-shift="sub" font-size="13">2</tspan></text>
+    <text x="120" y="174" text-anchor="middle" class="name">1,4-丁二胺</text>
+    <text x="120" y="199" text-anchor="middle" class="english">Putrescine</text>
+    <text x="120" y="227" text-anchor="middle" class="caption">04 / 目标产物</text>
+  </g>
+  <path d="M44 407H1456" stroke="#d9e5f2"/>
+  <text x="54" y="439" class="sub">GadA：谷氨酸脱羧酶 · CAR：羧酸还原酶 · TA：转氨酶</text>
+  <text x="1450" y="439" text-anchor="end" class="sub">路线与限速环节示意 · 不表示实测反应速率</text>
+</svg>

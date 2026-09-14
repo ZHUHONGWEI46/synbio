@@ -24,11 +24,14 @@ test('keeps detailed project surfaces out of the homepage', () => {
   assert.match(html, /data-view-target="experiments">查看实验数据中心/);
 });
 
-test('uses the latest supplied complex on the homepage with an honest qualifier', () => {
+test('uses the supplied PSW complex on the homepage with an honest qualifier', () => {
   const html = read('index.html');
-  assert.match(html, /assets\/home\/hero\/latest-complex-structure\.png/);
-  assert.match(html, /ATP · NADPH · Mg²⁺ · GABA/);
-  assert.match(html, /最新复合物对接构象/);
+  assert.match(html, /assets\/home\/hero\/psw-complex-horizontal\.png/);
+  assert.match(html, /PSW · 三突变母本/);
+  assert.match(html, /D281P · G420W · N514S/);
+  assert.match(html, /对接结构 · ATP \/ NADPH \/ Mg²⁺ \/ GABA/);
+  assert.match(read('src/narrative.js'), /psw-complex-horizontal\.png/);
+  assert.match(read('blue-theme.css'), /car-enzyme-chamber img[^}]+rotate: none;[^}]+scale: 1;/);
 });
 
 test('keeps the team as an independent animated view', () => {

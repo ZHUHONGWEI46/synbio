@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="styles.css?v=20260909-runtime-fix" />
     <link rel="stylesheet" href="research.css?v=20260909-runtime-fix" />
     <link rel="stylesheet" href="narrative.css?v=20260913-glass-icons" />
-    <link rel="stylesheet" href="blue-theme.css?v=20260913-team-marque" />
+    <link rel="stylesheet" href="blue-theme.css?v=20260914-psw-hero" />
     <link rel="stylesheet" href="round-browser.css?v=20260913-rounds" />
     <link rel="stylesheet" href="research-art.css?v=20260913-header-art" />
+    <link rel="stylesheet" href="catalytic-route.css?v=20260914-catalytic" />
+    <link rel="stylesheet" href="mobile.css?v=20260914-responsive" />
+    <link rel="stylesheet" href="docking-models.css?v=20260914-variants" />
   </head>
   <body>
     <header class="site-header">
@@ -19,7 +22,8 @@
         <img class="brand-mark" src="assets/brand/mutdesign-logo.png" alt="" aria-hidden="true" />
         <span class="brand-copy"><strong><span class="brand-team">NJTech-SynCAR</span><span class="brand-event">AI–SynBio</span><em>2026</em></strong></span>
       </a>
-      <nav class="primary-nav" aria-label="项目主目录">
+      <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false"><span aria-hidden="true">☰</span><span>目录</span></button>
+      <nav id="primary-navigation" class="primary-nav" aria-label="项目主目录">
         <span class="primary-nav-indicator" aria-hidden="true"></span>
         <button type="button" data-project-topic="overview"><span>主页</span></button>
         <button type="button" data-project-topic="validation"><img src="assets/navigation/01_closed_loop.png" alt="" /><span>干湿闭环</span></button>
@@ -60,12 +64,14 @@
                 </div>
               </div>
               <figure class="story-structure home-reveal">
-                <div class="story-structure-frame"><img src="assets/home/hero/latest-complex-structure.png" alt="MAB2962 与 ATP、NADPH、镁离子及 GABA 的最新复合物对接构象" /></div>
-                <figcaption><b>MAB2962 COMPLEX</b><span>ATP · NADPH · Mg²⁺ · GABA</span></figcaption>
+                <div class="story-structure-frame"><img src="assets/home/hero/psw-complex-horizontal.png" alt="PSW 三突变母本与 ATP、NADPH、镁离子及 GABA 的对接结构" /></div>
+                <figcaption><b>PSW · 三突变母本</b><span>D281P · G420W · N514S</span><small>对接结构 · ATP / NADPH / Mg²⁺ / GABA</small></figcaption>
               </figure>
             </div>
-            <div class="story-shell reaction-route home-reveal" aria-label="从L-谷氨酸到1,4-丁二胺的生物制造路线">
-              <div><small>起始原料</small><strong>L-谷氨酸</strong></div><span><b>谷氨酸脱羧酶</b><i aria-hidden="true">→</i></span><div><small>中间产物</small><strong>GABA</strong></div><span class="is-bottleneck"><b>CAR 及后续转化</b><i aria-hidden="true">→</i></span><div><small>目标产物</small><strong>1,4-丁二胺</strong></div>
+          </section>
+          <section class="catalytic-chapter" aria-label="滚动探索完整催化路线">
+            <div class="story-shell reaction-route" aria-label="从L-谷氨酸到1,4-丁二胺的生物制造路线">
+              <div><small>起始原料</small><strong>L-谷氨酸</strong></div><span><b>GadA · 谷氨酸脱羧酶</b><i aria-hidden="true">→</i></span><div><small>CAR 的目标底物</small><strong>GABA</strong></div><span class="is-bottleneck"><b>CAR · 羧酸还原酶 · 关键限速酶</b><i aria-hidden="true">→</i></span><div><small>中间产物</small><strong>4-氨基丁醛</strong></div><span><b>TA · 转氨酶</b><i aria-hidden="true">→</i></span><div><small>目标产物</small><strong>1,4-丁二胺</strong></div>
             </div>
           </section>
 
@@ -182,8 +188,9 @@
               <div class="field-stack"><label for="protein-select">目标蛋白质</label><select id="protein-select" disabled><option selected>MAB2962</option></select></div>
               <div class="field-stack"><label for="parent-select">当前亲本</label><select id="parent-select"><option value="M3" selected>M3 · D281P/G420W/N514S</option><option value="WT">WT · MAB2962</option></select></div>
               <p id="m3-source-status" class="source-status" aria-live="polite">正在读取并校验项目提供的 M3 FASTA…</p>
-              <div class="field-stack"><label for="structure-select">结构来源</label><select id="structure-select"><option selected value="complex">最新复合物对接构象 · ATP/NADPH/Mg²⁺/GABA</option><option value="0">AlphaFold3 · 模型 0</option><option value="1">AlphaFold3 · 模型 1</option><option value="2">AlphaFold3 · 模型 2</option><option value="3">AlphaFold3 · 模型 3</option><option value="4">AlphaFold3 · 模型 4</option></select></div>
-              <p id="structure-source-note" class="source-status">对接展示：文件名标为“三突”，但坐标中281、420、514仍为WT残基；该复合物基于AF3受体、未经能量最小化，不代表实验解析结构。</p>
+              <div class="field-stack"><label for="structure-select">结构来源</label><select id="structure-select"><option value="complex">历史 WT 参考复合物 · 旧资料</option><option value="0">AlphaFold3 · 模型 0</option><option value="1">AlphaFold3 · 模型 1</option><option value="2">AlphaFold3 · 模型 2</option><option value="3">AlphaFold3 · 模型 3</option><option value="4">AlphaFold3 · 模型 4</option></select></div>
+              <button id="match-candidate-structure" class="text-button" type="button">自动匹配当前候选结构</button>
+              <details class="structure-provenance"><summary>结构来源与使用说明</summary><p id="structure-source-note" class="source-status">PSW 三突变亲本对接模型，已核对 D281P/G420W/N514S。AF3 来源受体，未经能量最小化；非实验解析结构。没有专属模型的候选仅作参考位点映射。</p></details>
               <div class="field-grid"><div class="field-stack"><label for="chain-select">蛋白链</label><select id="chain-select" disabled><option selected>A</option></select></div><div class="field-stack"><label for="site-input">突变位点</label><input id="site-input" type="number" value="191" min="1" max="1184" inputmode="numeric" /></div></div>
             </section>
             <section class="panel-section mutation-section" aria-labelledby="mutation-title">
@@ -216,6 +223,7 @@
             <div class="section-toolbar"><div><h2 id="structure-title">蛋白质三维结构</h2><p id="structure-subtitle">MAB2962 · 链 A · 最新复合物对接构象</p></div><span id="structure-model-badge" class="model-badge">对接构象 · PDB</span></div>
             <div class="viewer-tabs" role="tablist" aria-label="结构与序列视图"><button class="is-active" type="button" role="tab" aria-selected="true" data-viewer-tab="structure"><img src="assets/icons/02_protein_structure.png" alt="" />三维结构</button><button type="button" role="tab" aria-selected="false" data-viewer-tab="sequence"><img src="assets/icons/03_fasta_sequence.png" alt="" />FASTA 序列</button><button type="button" role="tab" aria-selected="false" data-viewer-tab="pae"><img src="assets/icons/04_pae_heatmap.png" alt="" />PAE 热图</button></div>
             <div class="ligand-focus-bar" aria-label="复合物组分快速聚焦"><span>快速聚焦</span><button type="button" data-focus-chain="E" data-focus-label="GABA">GABA</button><button type="button" data-focus-chain="B" data-focus-label="ATP">ATP</button><button type="button" data-focus-chain="C" data-focus-label="NADPH">NADPH</button><button type="button" data-focus-chain="D" data-focus-label="Mg²⁺">Mg²⁺</button><button id="reset-structure-view" type="button">全结构</button></div>
+            <div id="docking-mutations" class="docking-mutations" aria-label="所选对接结构的突变位点"></div>
             <figure id="structure-panel" class="structure-view viewer-panel" aria-labelledby="structure-title">
               <div class="structure-callout"><span>当前候选</span><strong id="selected-mutation">Q191R</strong><small id="structure-distance">位点 191 · 点击可定位</small></div>
               <div class="structure-canvas"><div id="molstar-app" class="molstar-host" role="img" aria-label="MAB2962 AlphaFold3 真实三维结构"></div></div>
@@ -264,6 +272,6 @@
       <button id="evidence-dialog-close" class="dialog-close" type="button" aria-label="关闭原图">关闭</button>
       <figure><img id="evidence-dialog-image" alt="" /><figcaption><h2 id="evidence-dialog-title"></h2><p id="evidence-dialog-caption"></p></figcaption></figure>
     </dialog>
-    <script type="module" src="src/app.js?v=20260914-instant-route"></script>
+    <script type="module" src="src/app.js?v=20260914-docking-variants"></script>
   </body>
 </html>

@@ -46,10 +46,14 @@ function inline(text, source) {
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/&lt;(\/?(?:sup|sub))&gt;/g, '<$1>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, title, link) => {
+      const displayTitle = title.replaceAll('&amp;amp;', '&amp;');
+      const plainTitle = displayTitle.replace(/<[^>]+>/g, '').replaceAll('&amp;', '&');
       const module = researchModules.find((item) => link.endsWith(item[2]));
-      if (module) return `<a href="#${module[0]}" data-project-topic="${module[0]}">${title}</a>`;
+      if (module) return `<a href="#${module[0]}" data-project-topic="${module[0]}">${displayTitle}</a>`;
       const url = new URL(link.replaceAll('&amp;', '&'), new URL(source, location.href));
-      return ['http:', 'https:'].includes(url.protocol) ? `<a href="${escape(url.href)}" target="_blank" rel="noopener">${title}</a>` : title;
+      if (!['http:', 'https:'].includes(url.protocol)) return displayTitle;
+      if (url.origin !== location.origin) return `<a href="${escape(url.href)}" target="_blank" rel="noopener">${displayTitle}</a>`;
+      return `<button type="button" class="resource-link" data-resource-url="${escape(url.href)}" data-resource-title="${escape(plainTitle)}">${displayTitle}<span aria-hidden="true">↗</span></button>`;
     });
 }
 export function renderDocument(markdown, source, id) {
@@ -105,7 +109,7 @@ export function initResearchPages() {
     const section = document.createElement('section');
     section.className = 'page-view research-page'; section.dataset.appView = id; section.hidden = true;
     section.setAttribute('aria-label', title);
-    section.innerHTML = `<div class="research-scroll"><header class="research-header"><span>RESEARCH / NJTECH-SYNCAR</span><h1>${title}</h1><p>${description}</p><a href="${base + file}" target="_blank" rel="noopener">原始文档 ↗</a><small>资料版本：用户提供的 2026-09-11 仓库快照</small></header><div class="research-layout"><nav class="research-contents" aria-label="${title}章节目录"></nav><article class="research-article" aria-live="polite"><p>正在载入研究资料…</p></article></div></div>`;
+    section.innerHTML = `<div class="research-scroll"><header class="research-header"><span>RESEARCH / NJTECH-SYNCAR</span><h1>${title}</h1><p>${description}</p><button type="button" class="source-document-button" data-resource-url="${base + file}" data-resource-title="${title} · 源文档">源文档 · 站内查看 ↗</button><small>资料版本：用户提供的 2026-09-11 仓库快照</small></header><div class="research-layout"><nav class="research-contents" aria-label="${title}章节目录"></nav><article class="research-article" aria-live="polite"><p>正在载入研究资料…</p></article></div></div>`;
     main.append(section);
     section.querySelector('.research-header').insertAdjacentHTML('beforeend', researchHeaderArt(id));
     const route = document.createElement('div');

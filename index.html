@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="catalytic-route.css?v=20260914-catalytic" />
     <link rel="stylesheet" href="mobile.css?v=20260915-mobile-overlap" />
     <link rel="stylesheet" href="docking-models.css?v=20260914-variants" />
+    <link rel="stylesheet" href="resource-viewer.css?v=20260915" />
   </head>
   <body>
     <header class="site-header">
@@ -273,6 +274,10 @@
       <button id="evidence-dialog-close" class="dialog-close" type="button" aria-label="关闭原图">关闭</button>
       <figure><img id="evidence-dialog-image" alt="" /><figcaption><h2 id="evidence-dialog-title"></h2><p id="evidence-dialog-caption"></p></figcaption></figure>
     </dialog>
-    <script type="module" src="src/app.js?v=20260914-docking-variants"></script>
+    <dialog id="resource-dialog" class="resource-dialog" aria-labelledby="resource-dialog-title">
+      <header><div><span>PROJECT ARCHIVE / 站内资料</span><h2 id="resource-dialog-title">资料预览</h2><p id="resource-dialog-path"></p></div><div><a id="resource-dialog-raw" href="#" download>获取原文件</a><button id="resource-dialog-close" type="button" aria-label="关闭资料窗口">关闭</button></div></header>
+      <div id="resource-dialog-body" class="resource-dialog-body" aria-live="polite"><p>正在载入…</p></div>
+    </dialog>
+    <script type="module" src="src/app.js?v=20260915-resource-viewer"></script>
   </body>
 </html>

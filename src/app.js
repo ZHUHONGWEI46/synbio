@@ -16,6 +16,7 @@ import { initCatalyticRoute } from './catalytic-route.js?v=20260914-native-stick
 import { initMobileLayout } from './mobile-layout.js';
 import { dockingModels, dockingModel, dockingPath, matchingDockingModel, dockingMatches } from './docking-models.js';
 import { initResearchPages } from './research-pages.js?v=20260915-medal-evidence';
+import { initResourceViewer } from './resource-viewer.js?v=20260915';
 import { initNarrative } from './narrative.js?v=20260914-psw-hero';
 import { initTeamMotion } from './team-motion.js';
 import { createDemoPrediction } from './demo-prediction.js';
@@ -559,7 +560,7 @@ function bindNavigation() {
     const view = viewFromHash(location.hash);
     const current = document.querySelector('[data-app-view]:not([hidden])')?.dataset.appView;
     if (current === view) return;
-    setWorkbenchNavigation(!['overview', 'team'].includes(view));
+    setWorkbenchNavigation(['design', 'experiments', 'batch'].includes(view));
     switchAppView(view);
   });
 }
@@ -923,6 +924,7 @@ async function initialiseWorkbench() {
   configureDockingUI();
   renderMidtermEvidence();
   initResearchPages();
+  initResourceViewer();
   initMobileLayout();
   initNarrative();
   try { initCatalyticRoute(); } catch (error) { console.warn('Catalytic route motion unavailable; keeping the complete route visible.', error); }
@@ -943,7 +945,7 @@ async function initialiseWorkbench() {
   } });
   updateExperimentResult(selectedExperiment);
   const initialView = viewFromHash(location.hash);
-  setWorkbenchNavigation(!['overview', 'team'].includes(initialView));
+  setWorkbenchNavigation(['design', 'experiments', 'batch'].includes(initialView));
   commitAppView(initialView);
   afterAppViewChange(initialView);
   try {

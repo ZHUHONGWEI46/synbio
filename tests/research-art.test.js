@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { researchModules, researchHeaderArt } from '../src/research-pages.js';
 
-test('five research mastheads map to distinct decorative atlas strips', () => {
+test('research mastheads reuse the five decorative atlas strips consistently', () => {
   researchModules.forEach(([id], row) => {
     const html = researchHeaderArt(id);
-    assert.ok(html.includes(`--art-row:${row * 25}%`));
+    assert.ok(html.includes(`--art-row:${(row % 5) * 25}%`));
     assert.ok(html.includes('aria-hidden="true"'));
     assert.ok(html.includes('非实验结果'));
   });

@@ -206,3 +206,11 @@ test('labels descriptive experiment statistics without inventing a QC threshold'
   assert.match(html, /CV/);
   assert.match(html, /尚未定义验收阈值/);
 });
+test('project impact documents are reachable from the rendered website', () => {
+  const html = read('index.html');
+  const pages = read('src/research-pages.js');
+  assert.match(html,/data-project-topic="human-practices"/);
+  for (const id of ['human-practices','education','collaboration','ai-safety','attributions']) assert.match(pages,new RegExp(`\\['${id}'`));
+  assert.match(pages,/EVIDENCE MAP \/ R0 → R1 → R2/);
+  assert.match(pages,/FCNN −0\.040 → 0\.118/);
+});

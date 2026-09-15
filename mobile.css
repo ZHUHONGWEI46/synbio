@@ -140,3 +140,23 @@
   .is-journey .catalytic-journey { margin: 4px 0 8px; }
   .is-journey .catalytic-footer { display: none; }
 }
+
+/* Mobile-only collision fixes for the homepage visual narrative. */
+@media (max-width: 760px) {
+  .car-engine-stage { min-height: 360px; }
+  .car-engine-stage .car-concept-visual { inset: -5% -7% 28%; }
+  .car-engine-stage .car-concept-visual > small { left: 12%; bottom: -18px; max-width: 48%; line-height: 1.45; }
+  .car-engine-stage .story-structure-frame { display: none; }
+  .car-engine-stage figcaption { right: auto; bottom: 3px; left: 5%; box-sizing: border-box; width: 90%; min-width: 0; padding: 9px 12px 9px 14px; background: #f4f8fdea; }
+  .car-engine-stage figcaption b { display: block; font-size: 12px; line-height: 1.45; }
+  .car-engine-stage figcaption span,
+  .car-engine-stage figcaption small { display: block; margin-top: 3px; font-size: 9px; line-height: 1.4; white-space: normal; }
+  .reaction-route.is-journey .catalytic-grid { height: 380px; flex-basis: 380px; }
+  .is-journey .catalytic-step > strong { margin-top: 4px; line-height: 1.25; }
+  .is-journey .catalytic-step > span { display: block; min-height: 18px; line-height: 1.45; }
+  .is-journey .catalytic-link { top: 205px; }
+}
+@media (max-width: 760px) and (max-height: 700px) {
+  .reaction-route.is-journey .catalytic-grid { height: 300px; flex-basis: 300px; }
+  .is-journey .catalytic-link { top: 165px; }
+}

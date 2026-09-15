@@ -33,3 +33,10 @@ test('portrait workbench suggests landscape without forcing orientation and can 
   assert.doesNotMatch(js,/orientation\.lock|requestFullscreen/);
   assert.match(read('mobile.css'),/orientation: portrait/);
 });
+test('mobile homepage separates the car caption and catalytic stages',()=>{
+  const css=read('mobile.css');
+  assert.match(css,/\.car-engine-stage \.story-structure-frame \{ display: none; \}/);
+  assert.match(css,/\.car-engine-stage figcaption[^}]+width: 90%/);
+  assert.match(css,/\.is-journey \.catalytic-link \{ top: 205px; \}/);
+  assert.match(css,/\.reaction-route\.is-journey \.catalytic-grid \{ height: 380px; flex-basis: 380px; \}/);
+});

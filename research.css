@@ -113,6 +113,23 @@
 .research-article h2 { display: flex; gap: 14px; align-items: baseline; }
 .research-article h2::before { content: ''; flex: 0 0 4px; height: 20px; background: #488a99; align-self: center; }
 .research-figures figure { border-top: 3px solid #629da9; box-shadow: 0 12px 26px #23395406; }
+.evidence-map { grid-template-columns: 190px minmax(0,1fr); gap: 28px; align-items: start; }
+.evidence-chain { display: grid; grid-template-columns: 1fr 18px 1fr 18px 1fr 18px 1fr; align-items: stretch; gap: 7px; margin: 18px 0; }
+.evidence-chain > span { display: grid; align-content: start; gap: 5px; min-width: 0; padding: 12px; border: 1px solid #cfdfee; border-radius: 10px; background: linear-gradient(145deg,#fbfdff,#eef5fd); }
+.evidence-chain > span small { margin: 0; color: #5887b9; font: 700 8px ui-monospace,monospace; letter-spacing: .08em; }
+.evidence-chain > span b { color: #254d77; font-size: 12px; line-height: 1.45; }
+.evidence-chain > span em { color: #71869e; font-size: 10px; font-style: normal; line-height: 1.5; }
+.evidence-chain > i { align-self: center; color: #78a1cc; font-style: normal; text-align: center; }
+.evidence-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.evidence-actions a { padding: 7px 10px; border: 1px solid #cbdced; border-radius: 999px; background: #f7faff; text-decoration: none; }
+.impact-directory { display: grid; grid-template-columns: minmax(220px,.75fr) minmax(0,1.6fr); gap: 28px; align-items: end; }
+.impact-directory > div small { margin: 0; color: #5887b9; font: 700 9px ui-monospace,monospace; letter-spacing: .15em; }
+.impact-directory h2 { margin: 9px 0 7px; color: #294f76; font-size: 21px; }
+.impact-directory p { margin: 0; font-size: 12px; line-height: 1.7; }
+.impact-directory nav { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 8px; }
+.impact-directory nav a { display: grid; gap: 5px; min-width: 0; padding: 11px; border: 1px solid #d2dfed; border-radius: 10px; background: #f8fbff; text-decoration: none; }
+.impact-directory nav b { color: #315d8b; font-size: 11px; }
+.impact-directory nav span { color: #8292a6; font-size: 9px; line-height: 1.45; }
 @media (max-width: 760px) {
  .research-header { padding: 24px 18px; }
  .research-route ol { grid-template-columns: 1fr 1fr; gap: 18px 10px; }
@@ -123,4 +140,10 @@
  .manufacturing-scene { border-radius: 6px 28px 6px 6px; }
  .design-evidence-line li::before { float: right; width: 100px; height: 100px; margin: 0 0 12px 14px; }
  .learning-loop li::after { height: 80px; }
+ .evidence-map { grid-template-columns: 1fr; }
+ .evidence-map .feedback-diagram { display: none; }
+ .evidence-chain { grid-template-columns: 1fr; gap: 7px; }
+ .evidence-chain > i { transform: rotate(90deg); line-height: 12px; }
+ .impact-directory { grid-template-columns: 1fr; align-items: start; }
+ .impact-directory nav { grid-template-columns: 1fr 1fr; }
 }

@@ -7,13 +7,13 @@
     <title>NJTech-SynCAR | AI–SynBio Challenge 2026</title>
     <link rel="stylesheet" href="vendor/molstar/molstar.css" />
     <link rel="stylesheet" href="styles.css?v=20260909-runtime-fix" />
-    <link rel="stylesheet" href="research.css?v=20260909-runtime-fix" />
+    <link rel="stylesheet" href="research.css?v=20260915-evidence-map" />
     <link rel="stylesheet" href="narrative.css?v=20260913-glass-icons" />
     <link rel="stylesheet" href="blue-theme.css?v=20260914-psw-hero" />
     <link rel="stylesheet" href="round-browser.css?v=20260913-rounds" />
     <link rel="stylesheet" href="research-art.css?v=20260913-header-art" />
     <link rel="stylesheet" href="catalytic-route.css?v=20260914-catalytic" />
-    <link rel="stylesheet" href="mobile.css?v=20260914-responsive" />
+    <link rel="stylesheet" href="mobile.css?v=20260915-mobile-overlap" />
     <link rel="stylesheet" href="docking-models.css?v=20260914-variants" />
   </head>
   <body>
@@ -31,6 +31,7 @@
         <button type="button" data-project-topic="wet-lab"><img src="assets/navigation/03_wet_lab.png" alt="" /><span>湿实验</span></button>
         <button type="button" data-project-topic="ai-methods"><span>AI 计算方法</span></button>
         <button type="button" data-project-topic="verifiability"><img src="assets/navigation/04_verifiability.png" alt="" /><span>可验证性</span></button>
+        <button type="button" data-project-topic="human-practices"><span>项目影响</span></button>
         <button type="button" data-project-topic="team"><span class="nav-icon-crop"><img src="assets/navigation/06_attributions.png" alt="" /></span><span>团队成员</span></button>
         <button id="workbench-trigger" class="workbench-trigger" type="button" aria-controls="workbench-subnav" aria-expanded="false"><img src="assets/navigation/07_design_workbench.png" alt="" /><span>设计工作台</span><i aria-hidden="true"></i></button>
       </nav>
@@ -116,14 +117,14 @@
             <div class="story-rail" aria-hidden="true"><span>05</span><i></i></div>
             <div class="story-shell">
               <div class="story-loop-heading home-reveal"><div><span class="story-kicker">A LEARNING EXPERIMENT</span><h2>把盲目试错，变成会学习的实验循环。</h2></div><p>实验给出真实答案，人工智能帮助缩小下一轮候选范围。预测不是结论，每一次推荐最终都要回到实验验证。</p></div>
-              <div class="ai-explanation home-reveal"><p>有了第一批数据，我们计划把<strong>突变位置、氨基酸的变化方式和对应的实验活性</strong>交给模型，让它学习哪些区域更关键、哪些变化更可能改善底物结合，以及哪些组合值得进一步尝试。</p><p>蛋白语言模型提供序列中隐藏的规律，结构预测帮助观察酶的空间形状；分子对接与分子动力学模拟则用于探索 GABA 与活性中心的相互作用。整合这些信息，是为了对大量候选进行排序，推荐少量值得实验验证的变体。</p></div>
+              <div class="ai-explanation home-reveal"><p>我们已经把 R0 的<strong>突变位置、氨基酸变化和真实实验活性</strong>用于监督模型训练，并将 R1 实验标签继续反馈模型；随后固定 R2 为未来测试集，检验加入新一轮数据前后的排序表现。</p><p>ESM2 提供冻结序列表征，RF 与 FCNN 使用历史轮次的实验标签学习候选排序。在同一 R2 测试集上，加入 R1 反馈后 FCNN 的 Spearman 从 −0.040 变为 0.118；这一改善仅属于该模型与划分，不代表所有模型均改善。</p></div>
               <ol class="learning-loop" aria-label="AI辅助酶改造闭环">
                 <li class="home-reveal"><span>01</span><strong>读懂酶</strong><p>结合序列、三维结构、底物结合区域与催化中心，寻找可能影响 GABA 转化的位置。</p></li>
                 <li class="home-reveal"><span>02</span><strong>做出突变</strong><p>构建少量更有依据的候选变体，通过高通量检测获得真实活性数据。</p></li>
                 <li class="home-reveal"><span>03</span><strong>让模型学习</strong><p>将突变方式和实验结果交给模型，学习哪些区域与变化更值得关注。</p></li>
                 <li class="home-reveal"><span>04</span><strong>回到实验</strong><p>模型推荐下一轮候选，再由实验决定是否有效，持续形成闭环。</p></li>
               </ol>
-              <p class="loop-feedback home-reveal">每一轮实验的结果都会成为下一轮学习的输入。随着数据积累，我们希望逐步改善候选选择，让有限的实验资源投入到更有依据的方向。</p>
+              <p class="loop-feedback home-reveal">R0—R2 已形成“候选排序—实验验证—标签反馈—固定未来轮次评估”的历史闭环。R3 作为五突变组合的回顾性边界挑战独立展示，不纳入正式训练或闭环成功的证据。</p>
               <div class="story-destination-links home-reveal"><button type="button" data-view-target="design">进入结构与突变页面</button><button type="button" data-view-target="experiments">查看实验数据中心</button><span>网页中的 AI 评分仅用于流程演示，不代表真实预测结果。</span></div>
             </div>
           </section>
@@ -142,7 +143,7 @@
             <div class="story-shell story-outlook-grid">
               <div class="story-heading home-reveal"><span class="story-kicker">FROM ONE ENZYME TO A METHOD</span><h2>从改造一个酶开始，<br>建立可复用的方法。</h2><p>我们希望以 MAB2962 为示范，建立面向羧酸还原酶底物适应性改造的 AI 辅助设计平台。当酶对目标底物的活性不足时，可以将序列、结构和实验数据结合起来，更有依据地寻找改造方案。</p><p>如果这一策略成功，它既能为 L-谷氨酸到 1,4-丁二胺的新型生物制造路线提供关键酶元件，也能为其他羧酸还原酶的改造提供参考。当前的实验和分析，正是迈向这一目标的起点。</p></div>
               <dl class="story-facts home-reveal">
-                <div><dt>目标酶</dt><dd>MAB2962</dd></div><div><dt>序列长度</dt><dd>1,184 aa</dd></div><div><dt>当前数据</dt><dd>R0—R2 实验与评估</dd></div>
+                <div><dt>目标酶</dt><dd>MAB2962</dd></div><div><dt>序列长度</dt><dd>1,184 aa</dd></div><div><dt>正式闭环</dt><dd>R0—R2</dd></div><div><dt>边界挑战</dt><dd>R3 · 不纳入训练</dd></div>
               </dl>
               <div class="story-outlook-action home-reveal"><p>让每一轮实验都成为下一轮设计的依据。</p><button class="story-primary-action" type="button" data-view-target="design">进入 MutDesign 工作台</button></div>
             </div>

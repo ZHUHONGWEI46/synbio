@@ -15,6 +15,17 @@ PSW → ESM2 zero-shot → R0 实验 → 监督模型训练
 
 R0、R1、R2 的正式候选表位于 [`data/processed/`](../data/processed/)。前向划分、三个模型的全部 Spearman 结果和约束见 [AI / Computational Methods](./AI-Computational-Methods.md)。
 
+### 实验反馈具体改变了什么
+
+| 实验发现 | 据此采取的调整 | 后续可核对结果 |
+| --- | --- | --- |
+| R0 获得第一轮真实活性标签 | 不再只依靠 zero-shot 排序；以 R0 标签训练 RF 与 FCNN | 形成 R0→R1 的时间前向预测与实验验证 |
+| R1 返回新的实验标签 | 将 R1 加入监督训练集，同时保持 R2 为未见测试集 | FCNN 在同一 R2 测试集上的 Spearman 由 −0.040 变为 0.118 |
+| 96 孔板初筛可能受月牙效应影响 | 对初筛正向候选增加摇瓶复筛 | 初筛和复筛分别归档，不将初筛阳性直接作为最终结论 |
+| 单一全细胞终点活性不足以解释酶本身 | 增加纯酶表征和全细胞产物表现两层验证 | PSW-F430M 与 PSW-L417A 均形成两类独立实验记录 |
+
+候选集最佳值从 R0 的 1.118 变为 R1 的 1.554，仅表示两个候选集合中观察到的最佳实验值变化；不能单独用于证明 AI 性能提高。
+
 ## 2. 实验验证层次
 
 - 全细胞初筛与复筛：`data/raw/round_0_screening.xlsx`、`round_1_screening.xlsx`、`round_2_screening.xlsx`。

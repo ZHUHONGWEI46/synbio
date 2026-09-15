@@ -34,6 +34,13 @@ test('uses the supplied PSW complex on the homepage with an honest qualifier', (
   assert.match(read('blue-theme.css'), /car-enzyme-chamber img[^}]+rotate: none;[^}]+scale: 1;/);
 });
 
+test('homepage describes the completed historical loop and keeps R3 separate', () => {
+  const html = read('index.html');
+  assert.match(html,/R0—R2 已形成/);
+  assert.match(html,/R3 作为五突变组合的回顾性边界挑战/);
+  assert.doesNotMatch(html,/有了第一批数据，我们计划把/);
+});
+
 test('keeps the team as an independent animated view', () => {
   const html = read('index.html');
   const css = read('styles.css');

@@ -15,7 +15,7 @@ import { initHomeMotion } from './home-motion.js?v=20260914-reaction-journey';
 import { initCatalyticRoute } from './catalytic-route.js?v=20260914-native-sticky';
 import { initMobileLayout } from './mobile-layout.js';
 import { dockingModels, dockingModel, dockingPath, matchingDockingModel, dockingMatches } from './docking-models.js';
-import { initResearchPages } from './research-pages.js?v=20260914-docking-variants';
+import { initResearchPages } from './research-pages.js?v=20260915-medal-evidence';
 import { initNarrative } from './narrative.js?v=20260914-psw-hero';
 import { initTeamMotion } from './team-motion.js';
 import { createDemoPrediction } from './demo-prediction.js';
@@ -61,7 +61,7 @@ let loadedStructureSelection;
 let paeLoaded = false;
 let batchRows = [];
 
-const APP_VIEWS = ['overview', 'team', 'design', 'experiments', 'batch', 'validation', 'engineering', 'wet-lab', 'ai-methods', 'verifiability'];
+const APP_VIEWS = ['overview', 'team', 'design', 'experiments', 'batch', 'validation', 'engineering', 'wet-lab', 'ai-methods', 'verifiability', 'human-practices', 'education', 'collaboration', 'ai-safety', 'attributions'];
 
 export function viewFromHash(hash = '') {
   const requestedView = String(hash).replace(/^#/, '');
@@ -488,6 +488,11 @@ function openProjectTopic(topicId) {
     'wet-lab': { view: 'wet-lab' },
     'ai-methods': { view: 'ai-methods' },
     verifiability: { view: 'verifiability' },
+    'human-practices': { view: 'human-practices' },
+    education: { view: 'education' },
+    collaboration: { view: 'collaboration' },
+    'ai-safety': { view: 'ai-safety' },
+    attributions: { view: 'attributions' },
   };
   const destination = destinationByTopic[topicId] ?? { view: 'overview' };
   switchAppView(destination.view);
